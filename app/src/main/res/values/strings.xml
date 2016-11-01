@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">BombTest</string>
+    <!--DrawerToggle-->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!--Topbar-->
+    <string name="back">返回</string>
+    <string name="more">更多</string>
+
+    <!--１/左侧NavigationDrawer中的菜单项-->
+    <!--1.1-nav_header部分-->
+    <string name="clickLogin">点击登录</string>
+    <string name="loginInfo">体验更多功能</string>
+    <string name="userSignature">个性签名</string>
+    <!--1.2-NavigationView部分-->
+    <!--1.2.1-功能模块-->
+    <string name="drawer_group_function">功能</string>
+    <string name="bluetooth_connected">连接设备</string>
+    <!--1.2.2-选项模块-->
+    <string name="drawer_group_options">选项</string>
+    <string name="shareApp">推荐App给好友</string>
+    <string name="preference_setting">设置</string>
+
+    <!--2/设置界面菜单项-->
+    <string name="setting_normal">常规</string>
+    <string name="setting_cache">开启软件时自动打开蓝牙</string>
+    <string name="setting_other">其它</string>
+    <string name="setting_suggestion">意见反馈</string>
+
+    <!--3用户管理-->
+    <string name="email">邮箱</string>
+    <string name="phone">手机号</string>
+    <string name="next">下一步</string>
+    <!--3.1-登录界面-->
+    <string name="password">密码</string>
+    <string name="login">登 录</string>
+    <string name="weclome_login">欢迎登录</string>
+    <string name="forget_password">忘记密码?</string>
+    <string name="new_user_signUp">新用户注册</string>
+    <!--3.2-注册界面-->
+    <string name="signUp">注 册</string>
+    <string name="weclome_signUp">欢迎注册</string>
+    <string name="set_password">设置密码</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="exitUser_login">已有账号登录</string>
+    <string name="tvAgree">我已阅读并同意</string>
+    <string name="tvRule">使用条款和隐私政策</string>
+    <!--3.3退出登录-->
+    <string name="logout">退出账号</string>
+
+
+</resources>

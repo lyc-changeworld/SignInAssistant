@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--登录和注册界面使用的标题风格-->
+    <declare-styleable name="MyTopbar">
+        <attr name="MytitleText" format="string"></attr>
+        <attr name="MytitleTextSize" format="dimension"></attr>
+        <attr name="MytitleTextColor" format="color"></attr>
+        <attr name="MyleftTextColor" format="color"></attr>
+        <attr name="MyleftBackgroud" format="reference|color"></attr>
+        <attr name="MyleftText" format="string"></attr>
+        <attr name="MyrightTextColor" format="color"></attr>
+        <attr name="MyrightBackgroud" format="reference|color"></attr>
+        <attr name="MyrightText" format="string"></attr>
+    </declare-styleable>
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="border_overlay" format="boolean" />
+    </declare-styleable>
+
+
+</resources>

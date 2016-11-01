@@ -1,0 +1,45 @@
+<resources>
+
+    <!--&lt;!&ndash; Base application theme. &ndash;&gt;
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        &lt;!&ndash; Customize your theme here. &ndash;&gt;
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>-->
+    <!-- Base application theme. -->
+    <!--设置基础风格为：可切换到夜间模式的主题-->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionMenuTextColor">#ffffff</item>
+        //沉浸状态栏
+        <!-- 设置背景透明,设置为true后发现：
+             activity的启动效果由从右到左展开变成了从下往上展开-->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--设置状态栏沉浸式的效果:true-->
+        <item name="android:windowTranslucentStatus">true</item>
+        //ActionBarDrawerToggle设置返回图标的颜色(白色)
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
+    <!--定制个性化使用的主题-->
+    <style name="MyTheme" parent="AppTheme">
+        <!--设置默认背景图片-->
+        <!--<item name="android:windowBackground">@drawable/splash_bg</item>-->
+        <!--设置背景不透明,最底层默认会显示上面设置的那张图片-->
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+
+    <!--定制checkbox的风格-->
+    <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkbox_style</item>
+    </style>
+    <!--无actionBar的风格主题-->
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+</resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--android:checkableBehavior="single"该属性可以保留点击的痕迹-->
+    <!--功能-->
+    <item android:title="@string/drawer_group_function">
+        <menu>
+            <item
+                android:id="@+id/bluetooth_connected"
+                android:icon="@drawable/ic_bluetooth_searching_grey_600_24dp"
+                android:title="@string/bluetooth_connected"
+                android:checkable="true"/>
+        </menu>
+    </item>
+    <!--选项-->
+    <item android:title="@string/drawer_group_options">
+        <menu>
+            <item
+                android:id="@+id/preference_setting"
+                android:icon="@drawable/ic_settings_grey_600_24dp"
+                android:title="@string/preference_setting"
+                android:checkable="true"/>
+        </menu>
+    </item>
+
+</menu>
