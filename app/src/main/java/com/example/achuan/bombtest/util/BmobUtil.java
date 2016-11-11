@@ -3,6 +3,7 @@ package com.example.achuan.bombtest.util;
 import android.widget.Toast;
 
 import com.example.achuan.bombtest.app.App;
+import com.example.achuan.bombtest.model.bean.CourseBean;
 import com.example.achuan.bombtest.model.bean.MyUser;
 
 import cn.bmob.v3.BmobQuery;
@@ -21,8 +22,9 @@ public class BmobUtil {
     /************************** 用户管理************************/
     /***.1 用户注册***/
     //设置用户名==手机号码
-    public static BmobUser userSignUp(String phone, String password){
-        BmobUser bmobUser=new BmobUser();
+    public static MyUser userSignUp(String phone, String password){
+        //BmobUser bmobUser=new BmobUser();
+        MyUser bmobUser=new MyUser();
         bmobUser.setUsername(phone);//设置用户名==手机号码
         //这里直接将用户注册时输入的密码上传到服务器,后续将实现加密处理后提交
         bmobUser.setPassword(password);//设置密码
@@ -41,8 +43,8 @@ public class BmobUtil {
     }
     /***.2 用户登录***/
     //通过：用户名+密码
-    public static BmobUser userLogin(String userName, String password){
-        BmobUser  bmobUser= new BmobUser();
+    public static MyUser userLogin(String userName, String password){
+        MyUser bmobUser= new MyUser();
         bmobUser.setUsername(userName);
         bmobUser.setPassword(password);
         /*bmobUser.login(new SaveListener<BmobUser>() {
@@ -59,8 +61,8 @@ public class BmobUtil {
     }
     /***.3 查询用户***/
     //根据用户名来查询
-    public static BmobQuery<BmobUser> userQuery(String userName){
-        final BmobQuery<BmobUser> query = new BmobQuery<BmobUser>();
+    public static BmobQuery<MyUser> userQuery(String userName){
+        final BmobQuery<MyUser> query = new BmobQuery<MyUser>();
         query.addWhereEqualTo("username", userName);//一个用户名对应一个用户
         /*query.findObjects(new FindListener<BmobUser>() {
             @Override
@@ -110,7 +112,41 @@ public class BmobUtil {
             }
         }
     });*/
-
+     /**************************查询数据************************/
+    /***1 查询全部的课程***/
+    public static BmobQuery<CourseBean> courseBmobQueryAll(){
+        final BmobQuery<CourseBean> query = new BmobQuery<CourseBean>();
+        // 根据Semester字段升序显示数据（由小到大）
+        //query.order("Semester");
+        /*query.findObjects(new FindListener<BmobUser>() {
+            @Override
+            public void done(List<BmobUser> object,BmobException e) {
+                if(e==null){
+                }else{
+                }
+            }
+        });*/
+        return query;
+    }
+    /***2 查询包含输入关键字的课程***/
+    public static BmobQuery<CourseBean> courseBmobQueryFromKeyword(String keyword){
+        final BmobQuery<CourseBean> query = new BmobQuery<CourseBean>();
+        /*目前模糊查询已经改成收费用户才能使用了*/
+        //查询Cname字段的值含有keyword关键字的数据
+        query.addWhereContains("Cname", keyword);
+        //模糊查询
+        //String bql ="select * from CourseBean where Cname like '%"+keyword+"%'";
+        //select * from GameScore where name like 'smile%'
+        /*query.findObjects(new FindListener<BmobUser>() {
+            @Override
+            public void done(List<BmobUser> object,BmobException e) {
+                if(e==null){
+                }else{
+                }
+            }
+        });*/
+        return query;
+    }
 
 
 
@@ -137,8 +173,6 @@ public class BmobUtil {
             }
         });
     }
-
-
     /***.7 密码修改***/
     //自V3.4.3版本开始，SDK为开发者提供了直接修改当前用户登录密码的方法，只需要传入旧密码和新密码，
     // 然后调用BmobUser提供的静态方法updateCurrentUserPassword即可，以下是示例：

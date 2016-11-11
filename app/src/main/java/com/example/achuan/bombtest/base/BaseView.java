@@ -6,8 +6,8 @@ package com.example.achuan.bombtest.base;
  */
 public interface BaseView {
 
-    /*void showError(String msg);
+    void showError(String msg);
 
-    void useNightMode(boolean isNight);*/
+    //void useNightMode(boolean isNight);
 
 }

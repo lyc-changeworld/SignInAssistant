@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.achuan.bombtest.R;
 import com.example.achuan.bombtest.app.App;
 import com.example.achuan.bombtest.base.SimpleFragment;
+import com.example.achuan.bombtest.model.bean.MyUser;
 import com.example.achuan.bombtest.util.BmobUtil;
 import com.example.achuan.bombtest.util.SharedPreferenceUtil;
 
@@ -83,7 +84,7 @@ public class SettingFragment extends SimpleFragment implements CompoundButton.On
                         Toast.LENGTH_SHORT).show();
                 break;
             case R.id.bt_logout:
-                showExitDialog();
+                showLogout();
                 break;
         }
     }
@@ -97,7 +98,7 @@ public class SettingFragment extends SimpleFragment implements CompoundButton.On
     }
 
     //弹出对话框,确认是否退出账号
-    private void showExitDialog() {
+    private void showLogout() {
         //弹出一个对话框
         AlertDialog.Builder dialog=new AlertDialog.Builder(getActivity());//先创建一个构造实例
         dialog.setTitle("提示");//设置标题
@@ -112,7 +113,7 @@ public class SettingFragment extends SimpleFragment implements CompoundButton.On
                 BmobUtil.userLogOut();
                 //更新登录的全局变量
                 App.getInstance().setIsLogin(false);
-                App.getInstance().setBmobUser(BmobUser.getCurrentUser());
+                App.getInstance().setBmobUser(BmobUser.getCurrentUser(MyUser.class));
                 //重置用户信息显示布局
                 TextView mTV_nickName= (TextView) getActivity().findViewById(R.id.tv_nickName);
                 TextView mTV_userInfo= (TextView) getActivity().findViewById(R.id.tv_userInfo);

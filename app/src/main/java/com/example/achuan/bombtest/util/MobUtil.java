@@ -13,7 +13,7 @@ import cn.smssdk.gui.RegisterPage;
 
 /**
  * Created by achuan on 16-10-27.
- * 功能：Mob短信验证
+ * 功能：Mob功能类（短信验证）
  */
 public class MobUtil {
 

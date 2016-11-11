@@ -9,6 +9,7 @@ public class Constants {
     //================= TYPE ====================
     public static final int TYPE_SETTING=101;
     public static final int TYPE_BLUETOOTH=102;
+    public static final int TYPE_SIGNINASSISTANT=103;
 
 
 

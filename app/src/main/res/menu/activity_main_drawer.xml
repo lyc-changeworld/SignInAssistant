@@ -9,6 +9,11 @@
                 android:icon="@drawable/ic_bluetooth_searching_grey_600_24dp"
                 android:title="@string/bluetooth_connected"
                 android:checkable="true"/>
+            <item
+                android:id="@+id/signInAssistant"
+                android:icon="@drawable/ic_border_color_grey_600_24dp"
+                android:title="@string/signInAssistant"
+                android:checkable="true"/>
         </menu>
     </item>
     <!--选项-->

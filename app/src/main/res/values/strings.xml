@@ -12,10 +12,12 @@
     <string name="clickLogin">点击登录</string>
     <string name="loginInfo">体验更多功能</string>
     <string name="userSignature">个性签名</string>
+    <string name="clickSetting">点击设置信息</string>
     <!--1.2-NavigationView部分-->
     <!--1.2.1-功能模块-->
     <string name="drawer_group_function">功能</string>
     <string name="bluetooth_connected">连接设备</string>
+    <string name="signInAssistant">签到助手</string>
     <!--1.2.2-选项模块-->
     <string name="drawer_group_options">选项</string>
     <string name="shareApp">推荐App给好友</string>
@@ -47,6 +49,10 @@
     <string name="tvRule">使用条款和隐私政策</string>
     <!--3.3退出登录-->
     <string name="logout">退出账号</string>
+
+    <!--其它-->
+    <string name="signIn">签到</string>
+    <string name="action_search">搜索</string>
 
 
 </resources>

@@ -52,12 +52,20 @@
         <!--主要功能activity:背景不透明,竖式布局,-->
         <activity android:name=".ui.main.activity.MainActivity"
                   android:theme="@style/MyTheme"
-                  android:screenOrientation="portrait"></activity>
+                  android:screenOrientation="portrait"
+                  android:launchMode="singleTop"></activity>
         <!-- 登录界面 -->
         <activity android:name=".ui.main.activity.LoginActivity"
-            android:launchMode="singleTask"/>
+                  android:screenOrientation="portrait"
+                  android:launchMode="singleTask"/>
         <!-- 注册界面 -->
-        <activity android:name=".ui.main.activity.RegisterActivity"/>
+        <activity android:name=".ui.main.activity.RegisterActivity"
+                  android:screenOrientation="portrait"
+                  android:launchMode="singleTop"/>
+        <!--签到细节显示界面-->
+        <activity android:name=".ui.assistant.activity.SigninDetailActivity"
+                  android:screenOrientation="portrait"
+                  android:launchMode="singleTop"></activity>
 
     </application>
 

@@ -8,17 +8,8 @@
     在5.0的系统中设置该属性时,出现了顶部状态栏白屏化的现象
     因此该属性最好不要在非DrawerLayout布局中使用-->
 
-    <LinearLayout
-        android:id="@+id/id_ll_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <!--上边的toolbar布局-->
-        <include layout="@layout/view_toolbar"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content">
-        </include>
-    </LinearLayout>
+    <include layout="@layout/view_toolbar"
+             android:id="@+id/toolbar"/>
     <ImageView
         android:id="@+id/id_iv_1"
         android:layout_width="70dp"
@@ -26,7 +17,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/id_ll_1"
+        android:layout_below="@+id/toolbar"
         android:src="@drawable/student"/>
     <!--账号输入和密码输入框-->
     <RelativeLayout

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.achuan.bombtest.model.bean.MyUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +50,7 @@ public class App extends Application
         instance = this;
         sContext=getApplicationContext();//获得一个应用程序级别的Context
         /***进行判断,标记登录的状态***/
-        BmobUser bmobUser = BmobUser.getCurrentUser();
+        MyUser bmobUser = BmobUser.getCurrentUser(MyUser.class);
         if(bmobUser!=null){
             setIsLogin(true);//设置状态为:登录
             setBmobUser(bmobUser);

@@ -8,32 +8,52 @@ import cn.bmob.v3.BmobUser;
  *     对BmobUser类进行扩展，添加一些新的属性
  */
 public class MyUser extends BmobUser {
+    //Student表数据元素
+    private String Sno;//学号
+    private String Sname;//真实姓名
+    private String Ssex;//性别
+    private Integer Sage;//年龄
+    private String Sdept;//院系
+    //private String SphoneNum;//手机号码,user表中默认存在了
 
-    private String nickName;//昵称
-    private Boolean sex;//true代表男,false代表女
-    private Integer age;//年龄
-
-    public String getNickName() {
-        return nickName;
+    public String getSno() {
+        return Sno;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setSno(String sno) {
+        Sno = sno;
     }
 
-    public Boolean getSex() {
-        return sex;
+    public String getSname() {
+        return Sname;
     }
 
-    public void setSex(Boolean sex) {
-        this.sex = sex;
+    public void setSname(String sname) {
+        Sname = sname;
     }
 
-    public Integer getAge() {
-        return age;
+
+    public Integer getSage() {
+        return Sage;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setSage(Integer sage) {
+        Sage = sage;
+    }
+
+    public String getSdept() {
+        return Sdept;
+    }
+
+    public void setSdept(String sdept) {
+        Sdept = sdept;
+    }
+
+    public String getSsex() {
+        return Ssex;
+    }
+
+    public void setSsex(String ssex) {
+        Ssex = ssex;
     }
 }

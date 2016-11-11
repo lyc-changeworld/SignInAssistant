@@ -5,18 +5,8 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5">
 
-    <LinearLayout
-        android:id="@+id/id_ll_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <!--上边的toolbar布局-->
-        <include layout="@layout/view_toolbar"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content">
-        </include>
-    </LinearLayout>
-    <!--头像显示,必须在id_rtl_1之后应用-->
+    <include layout="@layout/view_toolbar"
+             android:id="@+id/toolbar"/>
     <ImageView
         android:id="@+id/id_iv_1"
         android:layout_width="70dp"
@@ -24,7 +14,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/id_ll_1"
+        android:layout_below="@+id/toolbar"
         android:src="@drawable/student"/>
     <!--账号输入和密码输入框-->
     <RelativeLayout

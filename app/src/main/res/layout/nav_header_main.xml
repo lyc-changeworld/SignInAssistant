@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/nav_header_height"
-                android:background="#1E90FF"
+                android:background="@color/navHeader_blue"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark">
-    <ImageView
+    <com.example.achuan.bombtest.widget.CircleImageView
         android:id="@+id/imageView"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@drawable/noicon"
+        app:border_width="1dp"/>
     <LinearLayout
         android:id="@+id/text_ll"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:orientation="vertical"
@@ -26,12 +28,14 @@
             android:layout_height="30dp"
             android:gravity="bottom"
             android:text="@string/clickLogin"
+            android:textSize="15sp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
         <TextView
             android:id="@+id/tv_userInfo"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="bottom"
+            android:textSize="15sp"
             android:text="@string/loginInfo"/>
     </LinearLayout>
     <TextView

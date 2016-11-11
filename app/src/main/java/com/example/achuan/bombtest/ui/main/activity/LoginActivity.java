@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.achuan.bombtest.R;
 import com.example.achuan.bombtest.app.App;
 import com.example.achuan.bombtest.base.SimpleActivity;
+import com.example.achuan.bombtest.model.bean.MyUser;
 import com.example.achuan.bombtest.util.BmobUtil;
 import com.example.achuan.bombtest.util.MobUtil;
 
@@ -122,9 +123,9 @@ public class LoginActivity extends SimpleActivity {
         final String userName = mIdEtAccName.getText().toString().trim();
         final String passWord = mIdEtAccPassword.getText().toString().trim();
         //最先执行查询操作
-        BmobUtil.userQuery(userName).findObjects(new FindListener<BmobUser>() {
+        BmobUtil.userQuery(userName).findObjects(new FindListener<MyUser>() {
             @Override
-            public void done(List<BmobUser> list, BmobException e) {
+            public void done(List<MyUser> list, BmobException e) {
                 if (e == null) {
                     if (list.size() <= 0) {
                         //不存在,提示该用户还没注册
@@ -149,7 +150,7 @@ public class LoginActivity extends SimpleActivity {
                                             /*****登录成功后关闭登录界面*****/
                                             //更新登录的全局变量
                                             App.getInstance().setIsLogin(true);
-                                            App.getInstance().setBmobUser(BmobUser.getCurrentUser());
+                                            App.getInstance().setBmobUser(BmobUser.getCurrentUser(MyUser.class));
                                             LoginActivity.this.finish();//结束当前activity
                                             /*new Handler().postDelayed(new Runnable() {
                                                 public void run() {

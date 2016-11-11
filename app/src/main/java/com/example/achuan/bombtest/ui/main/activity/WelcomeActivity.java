@@ -53,4 +53,9 @@ public class WelcomeActivity extends BaseActivity<WelcomePresenter>
             }
         },3000);//3秒
     }
+
+    @Override
+    public void showError(String msg) {
+
+    }
 }

@@ -2,8 +2,9 @@ package com.example.achuan.bombtest.util;
 
 import android.util.Log;
 /**
-* 功能：对打印事件的自定义控制,上线后通过改变阶段变量的数值实现打印事件的屏蔽
-* */
+ * Created by achuan on 16-08-24.
+ * 功能：对打印事件的自定义控制,上线后通过改变阶段变量的数值实现打印事件的屏蔽
+ */
 
 public class LogUtil
 {

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.achuan.bombtest.R;
 import com.example.achuan.bombtest.app.App;
 import com.example.achuan.bombtest.base.SimpleActivity;
+import com.example.achuan.bombtest.model.bean.MyUser;
 import com.example.achuan.bombtest.util.BmobUtil;
 
 import java.util.List;
@@ -137,9 +138,9 @@ public class RegisterActivity extends SimpleActivity {
         final String confirmPassword = mIdEtConfirmPassword.getText().toString().trim();//确认密码
         //最先执行查询操作
         BmobUtil.userQuery(registerName)
-                .findObjects(new FindListener<BmobUser>() {
+                .findObjects(new FindListener<MyUser>() {
                     @Override
-                    public void done(List<BmobUser> object, BmobException e) {
+                    public void done(List<MyUser> object, BmobException e) {
                         if (e == null) {
                             if (object.size() > 0) {
                                 //存在,提示该用户已经存在
@@ -164,7 +165,7 @@ public class RegisterActivity extends SimpleActivity {
                                                         /*****登录成功后关闭登录界面*****/
                                                         //更新登录的全局变量
                                                         App.getInstance().setIsLogin(true);
-                                                        App.getInstance().setBmobUser(BmobUser.getCurrentUser());
+                                                        App.getInstance().setBmobUser(BmobUser.getCurrentUser(MyUser.class));
                                                         RegisterActivity.this.finish();//跳转后清除内存
                                                         LoginActivity.getInstance().finish();//销毁之前保存的登录界面
                                                         /*new Handler().postDelayed(new Runnable() {

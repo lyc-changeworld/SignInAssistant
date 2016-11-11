@@ -40,8 +40,7 @@
                         android:text="@string/setting_cache"/>
                     <android.support.v7.widget.AppCompatCheckBox
                         android:id="@+id/cb_setting_open_bluetooth"
-                        android:button="@drawable/abc_btn_check_material"
-                        android:buttonTint="@color/colorAccent"
+                        android:theme="@style/MyCheckBox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
