@@ -31,6 +31,7 @@
                 android:layout_weight="1"
                 android:layout_margin="8dp"
                 android:layout_height="wrap_content">
+                <!--课程名称-->
                 <TextView
                     android:id="@+id/tv_assistant_item_Cname"
                     android:layout_width="wrap_content"
@@ -38,11 +39,11 @@
                     android:layout_marginStart="8dp"
                     android:ellipsize="end"
                     android:textColor="@color/colorText"
-                    android:textSize="15sp"
-                    android:text="课程名称"/>
+                    android:textSize="15sp"/>
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+                    <!--学分-->
                     <TextView
                         android:id="@+id/tv_assistant_item_Credit"
                         android:layout_width="wrap_content"
@@ -51,8 +52,8 @@
                         android:textColor="@color/comment_reply"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentBottom="true"
-                        android:textSize="13sp"
-                        android:text="学分"/>
+                        android:textSize="13sp"/>
+                    <!--学期-->
                     <TextView
                         android:id="@+id/tv_assistant_item_Semester"
                         android:layout_width="wrap_content"
@@ -61,8 +62,7 @@
                         android:textColor="@color/comment_reply"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:textSize="13sp"
-                        android:text="学期"/>
+                        android:textSize="13sp"/>
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

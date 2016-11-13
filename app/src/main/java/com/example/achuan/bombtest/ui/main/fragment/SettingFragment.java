@@ -1,8 +1,6 @@
 package com.example.achuan.bombtest.ui.main.fragment;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +15,7 @@ import com.example.achuan.bombtest.R;
 import com.example.achuan.bombtest.app.App;
 import com.example.achuan.bombtest.base.SimpleFragment;
 import com.example.achuan.bombtest.model.bean.MyUser;
+import com.example.achuan.bombtest.util.AlertDialogUtil;
 import com.example.achuan.bombtest.util.BmobUtil;
 import com.example.achuan.bombtest.util.SharedPreferenceUtil;
 
@@ -99,30 +98,25 @@ public class SettingFragment extends SimpleFragment implements CompoundButton.On
 
     //弹出对话框,确认是否退出账号
     private void showLogout() {
-        //弹出一个对话框
-        AlertDialog.Builder dialog=new AlertDialog.Builder(getActivity());//先创建一个构造实例
-        dialog.setTitle("提示");//设置标题
-        dialog.setMessage("确定要退出当前账号吗?");//设置内容部分
-        dialog.setCancelable(true);//设置是否可以通过Back键取消：false为不可以取消,true为可以取消
-        //设置右边按钮的信息
-        dialog.setPositiveButton("退出登录", new DialogInterface.OnClickListener() {
-            @Override//点击触发事件
-            public void onClick(DialogInterface dialogInterface, int i) {
-                mBtLogout.setVisibility(View.INVISIBLE);
-                //退出账号,清除本地缓存用户对象
-                BmobUtil.userLogOut();
-                //更新登录的全局变量
-                App.getInstance().setIsLogin(false);
-                App.getInstance().setBmobUser(BmobUser.getCurrentUser(MyUser.class));
-                //重置用户信息显示布局
-                TextView mTV_nickName= (TextView) getActivity().findViewById(R.id.tv_nickName);
-                TextView mTV_userInfo= (TextView) getActivity().findViewById(R.id.tv_userInfo);
-                mTV_nickName.setText(R.string.clickLogin);
-                mTV_userInfo.setText(R.string.loginInfo);
-            }
-        });
-        //设置左边按钮的信息
-        dialog.setNegativeButton("取消", null);
-        dialog.show();//将对话框显示出来
+        AlertDialogUtil.createDialog(getContext(), "提示", "确定要退出当前账号吗?", "退出登录", "取消",
+                new AlertDialogUtil.OnAlertDialogButtonClickListener() {
+                    @Override
+                    public void onRightButtonClick() {
+                        mBtLogout.setVisibility(View.INVISIBLE);
+                        //退出账号,清除本地缓存用户对象
+                        BmobUtil.userLogOut();
+                        //更新登录的全局变量
+                        App.getInstance().setIsLogin(false);
+                        App.getInstance().setBmobUser(BmobUser.getCurrentUser(MyUser.class));
+                        //重置用户信息显示布局
+                        TextView mTV_nickName= (TextView) getActivity().findViewById(R.id.tv_nickName);
+                        TextView mTV_userInfo= (TextView) getActivity().findViewById(R.id.tv_userInfo);
+                        mTV_nickName.setText(R.string.clickLogin);
+                        mTV_userInfo.setText(R.string.loginInfo);
+                    }
+                    @Override
+                    public void onLeftButtonClick() {
+                    }
+                });
     }
 }

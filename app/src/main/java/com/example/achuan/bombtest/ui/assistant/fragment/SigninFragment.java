@@ -1,5 +1,6 @@
 package com.example.achuan.bombtest.ui.assistant.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import com.example.achuan.bombtest.base.BaseFragment;
 import com.example.achuan.bombtest.model.bean.CourseBean;
 import com.example.achuan.bombtest.presenter.SigninPresenter;
 import com.example.achuan.bombtest.presenter.contract.SigninContract;
+import com.example.achuan.bombtest.ui.assistant.activity.SigninDetailActivity;
 import com.example.achuan.bombtest.ui.assistant.adapter.SigninAdapter;
 import com.example.achuan.bombtest.util.SnackbarUtil;
 import com.example.achuan.bombtest.widget.SideBar;
@@ -69,6 +71,16 @@ public class SigninFragment extends BaseFragment<SigninPresenter> implements Sig
         mIdRecyclerView.setLayoutManager(linearManager);
         //为列表控件配置适配器
         mIdRecyclerView.setAdapter(mAssistantAdapter);
+        /***设置item的点击监听事件***/
+        mAssistantAdapter.setOnItemClickListener(new SigninAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, CourseBean courseBean) {
+                //跳转到签到界面
+                Intent intent=new Intent(getContext(), SigninDetailActivity.class);
+                intent.putExtra("title",courseBean.getCname());
+                getContext().startActivity(intent);
+            }
+        });
         //初始化加载控件启动加载动画
         mViewLoading.start();
         //初始化获取网络数据
@@ -132,6 +144,8 @@ public class SigninFragment extends BaseFragment<SigninPresenter> implements Sig
 
             }
         });
+
+
     }
 
     //将后台加载好的数据进行适配显示

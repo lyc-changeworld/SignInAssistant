@@ -51,8 +51,9 @@
     <string name="logout">退出账号</string>
 
     <!--其它-->
-    <string name="signIn">签到</string>
+    <string name="signIn">签 到</string>
     <string name="action_search">搜索</string>
+    <string name="selectTeacher_info">选择任课老师:</string>
 
 
 </resources>

@@ -5,6 +5,7 @@ import android.widget.Toast;
 import com.example.achuan.bombtest.app.App;
 import com.example.achuan.bombtest.model.bean.CourseBean;
 import com.example.achuan.bombtest.model.bean.MyUser;
+import com.example.achuan.bombtest.model.bean.TeacherBean;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
@@ -19,7 +20,7 @@ import cn.bmob.v3.listener.UpdateListener;
 public class BmobUtil {
     private static String TAG="lyc-bmob";
 
-    /************************** 用户管理************************/
+    /************************** 1-用户管理************************/
     /***.1 用户注册***/
     //设置用户名==手机号码
     public static MyUser userSignUp(String phone, String password){
@@ -112,8 +113,8 @@ public class BmobUtil {
             }
         }
     });*/
-     /**************************查询数据************************/
-    /***1 查询全部的课程***/
+     /**************************2-查询数据************************/
+    /***.1 查询全部的课程***/
     public static BmobQuery<CourseBean> courseBmobQueryAll(){
         final BmobQuery<CourseBean> query = new BmobQuery<CourseBean>();
         // 根据Semester字段升序显示数据（由小到大）
@@ -128,7 +129,7 @@ public class BmobUtil {
         });*/
         return query;
     }
-    /***2 查询包含输入关键字的课程***/
+    /***.2 查询包含输入关键字的课程***/
     public static BmobQuery<CourseBean> courseBmobQueryFromKeyword(String keyword){
         final BmobQuery<CourseBean> query = new BmobQuery<CourseBean>();
         /*目前模糊查询已经改成收费用户才能使用了*/
@@ -137,6 +138,22 @@ public class BmobUtil {
         //模糊查询
         //String bql ="select * from CourseBean where Cname like '%"+keyword+"%'";
         //select * from GameScore where name like 'smile%'
+        /*query.findObjects(new FindListener<BmobUser>() {
+            @Override
+            public void done(List<BmobUser> object,BmobException e) {
+                if(e==null){
+                }else{
+                }
+            }
+        });*/
+        return query;
+    }
+
+    /***.1 查询全部的教师数据***/
+    public static BmobQuery<TeacherBean> teacherBmobQueryAll(){
+        final BmobQuery<TeacherBean> query = new BmobQuery<TeacherBean>();
+        // 根据Semester字段升序显示数据（由小到大）
+        //query.order("Semester");
         /*query.findObjects(new FindListener<BmobUser>() {
             @Override
             public void done(List<BmobUser> object,BmobException e) {

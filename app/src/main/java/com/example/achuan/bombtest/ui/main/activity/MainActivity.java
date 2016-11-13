@@ -1,13 +1,11 @@
 package com.example.achuan.bombtest.ui.main.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +21,7 @@ import com.example.achuan.bombtest.presenter.MainPresenter;
 import com.example.achuan.bombtest.presenter.contract.MainContract;
 import com.example.achuan.bombtest.ui.assistant.fragment.AssistantMainFragment;
 import com.example.achuan.bombtest.ui.main.fragment.SettingFragment;
+import com.example.achuan.bombtest.util.AlertDialogUtil;
 import com.example.achuan.bombtest.util.SharedPreferenceUtil;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -262,24 +261,19 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     //弹出对话框,确认是否退出App
     private void showExitDialog() {
-        //弹出一个对话框
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);//先创建一个构造实例
-        dialog.setTitle("提示");//设置标题
-        dialog.setMessage("确定退出签到助手吗");//设置内容部分
-        dialog.setCancelable(true);//设置是否可以通过Back键取消：false为不可以取消,true为可以取消
-        //设置右边按钮的信息
-        dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override//点击触发事件
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //BluetoothUtil.getBluetooth().disable();//退出应用后关闭蓝牙
-                //点击确定后退出app
-                //将所有的活动依次出栈,然后回收所有的资源
-                App.getInstance().exitApp();
-            }
-        });
-        //设置左边按钮的信息
-        dialog.setNegativeButton("取消", null);
-        dialog.show();//将对话框显示出来
+        AlertDialogUtil.createDialog(this, "提示", "确定退出签到助手吗", "确定", "取消",
+                new AlertDialogUtil.OnAlertDialogButtonClickListener() {
+                    @Override
+                    public void onRightButtonClick() {
+                        //BluetoothUtil.getBluetooth().disable();//退出应用后关闭蓝牙
+                        //点击确定后退出app
+                        //将所有的活动依次出栈,然后回收所有的资源
+                        App.getInstance().exitApp();
+                    }
+                    @Override
+                    public void onLeftButtonClick() {
+                    }
+                });
     }
 
     //根据item编号获取fragment对象的方法

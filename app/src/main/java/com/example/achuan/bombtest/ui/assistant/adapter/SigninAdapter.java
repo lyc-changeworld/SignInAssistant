@@ -1,7 +1,6 @@
 package com.example.achuan.bombtest.ui.assistant.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import com.example.achuan.bombtest.R;
 import com.example.achuan.bombtest.model.bean.CourseBean;
-import com.example.achuan.bombtest.ui.assistant.activity.SigninDetailActivity;
 import com.example.achuan.bombtest.util.StringUtil;
 import com.example.achuan.bombtest.widget.SquareImageView;
 
@@ -32,6 +30,15 @@ public class SigninAdapter extends RecyclerView.Adapter<SigninAdapter.ViewHolder
     private Context mContext;//显示框面
     private List<CourseBean> mList;
     //private int mStart,mEnd;//定义item加载的起始和结束的位置序号
+    private OnRecyclerViewItemClickListener mOnItemClickListener = null;
+
+    //define interface
+    public  interface OnRecyclerViewItemClickListener {
+        void onItemClick(View view , CourseBean courseBean);
+    }
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+        this.mOnItemClickListener = listener;
+    }
 
     /*构造方法*/
     public SigninAdapter(Context mContext, List<CourseBean> mList) {
@@ -49,7 +56,7 @@ public class SigninAdapter extends RecyclerView.Adapter<SigninAdapter.ViewHolder
      ****/
     //先创建ViewHolder
     public ViewHolder onCreateViewHolder(ViewGroup parent, int type) {
-        View view = mInflater.inflate(R.layout.item_assistant, parent, false);//载入item布局
+        View view = mInflater.inflate(R.layout.item_signin_course, parent, false);//载入item布局
         ViewHolder viewHolder = new ViewHolder(view);//创建一个item的viewHoler实例
         return viewHolder;
     }
@@ -61,7 +68,7 @@ public class SigninAdapter extends RecyclerView.Adapter<SigninAdapter.ViewHolder
     //绑定ViewHolder
     public void onBindViewHolder(final ViewHolder holder, final int postion) {
         //再通过viewHolder中缓冲的控件添加相关数据
-        final CourseBean bean = mList.get(postion);//从数据源集合中获得对象
+        final CourseBean courseBean = mList.get(postion);//从数据源集合中获得对象
         /*//获取对应item的图片链接
         String url=bean.getPicUrl();
         *//*通过设置tag来保证图片和url的对应显示,防止网络加载时的时序错乱*//*
@@ -69,10 +76,10 @@ public class SigninAdapter extends RecyclerView.Adapter<SigninAdapter.ViewHolder
         */
         //绑定数据
         holder.mIvWechatItemImage.setImageResource(R.drawable.course);
-        holder.mTvAssistantItemCname.setText(bean.getCname());
-        holder.mTvAssistantItemCredit.setText(bean.getCredit().toString()+"学分");
+        holder.mTvAssistantItemCname.setText(courseBean.getCname());
+        holder.mTvAssistantItemCredit.setText(courseBean.getCredit().toString()+"学分");
         String mSemester = null;
-        switch (bean.getSemester()){
+        switch (courseBean.getSemester()){
             case 1:mSemester="大一上学期";break;
             case 2:mSemester="大一下学期";break;
             case 3:mSemester="大二上学期";break;
@@ -87,10 +94,10 @@ public class SigninAdapter extends RecyclerView.Adapter<SigninAdapter.ViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //跳转到签到界面
-                Intent intent=new Intent(mContext, SigninDetailActivity.class);
-                intent.putExtra("title",bean.getCname());
-                mContext.startActivity(intent);
+                if(mOnItemClickListener!=null){
+                    //设置回调监听
+                    mOnItemClickListener.onItemClick(view, courseBean);
+                }
             }
         });
     }
