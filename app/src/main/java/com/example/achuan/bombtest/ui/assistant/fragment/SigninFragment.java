@@ -71,16 +71,6 @@ public class SigninFragment extends BaseFragment<SigninPresenter> implements Sig
         mIdRecyclerView.setLayoutManager(linearManager);
         //为列表控件配置适配器
         mIdRecyclerView.setAdapter(mAssistantAdapter);
-        /***设置item的点击监听事件***/
-        mAssistantAdapter.setOnItemClickListener(new SigninAdapter.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, CourseBean courseBean) {
-                //跳转到签到界面
-                Intent intent=new Intent(getContext(), SigninDetailActivity.class);
-                intent.putExtra("title",courseBean.getCname());
-                getContext().startActivity(intent);
-            }
-        });
         //初始化加载控件启动加载动画
         mViewLoading.start();
         //初始化获取网络数据
@@ -145,6 +135,17 @@ public class SigninFragment extends BaseFragment<SigninPresenter> implements Sig
             }
         });
 
+        /***设置item的点击监听事件***/
+        mAssistantAdapter.setOnItemClickListener(new SigninAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, CourseBean courseBean) {
+                //跳转到签到界面
+                Intent intent=new Intent(getContext(), SigninDetailActivity.class);
+                intent.putExtra("title",courseBean.getCname());
+                intent.putExtra("Cno",courseBean.getCno());
+                getContext().startActivity(intent);
+            }
+        });
 
     }
 
@@ -172,14 +173,6 @@ public class SigninFragment extends BaseFragment<SigninPresenter> implements Sig
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
     public void showError(String msg) {
         //如果在进行下拉刷新,则停止
         if (mSwipeRefresh.isRefreshing()) {
@@ -190,5 +183,12 @@ public class SigninFragment extends BaseFragment<SigninPresenter> implements Sig
             mViewLoading.stop();//停止刷新动画显示
         }
         SnackbarUtil.showShort(mIdRecyclerView,msg);
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 }

@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.example.achuan.bombtest.R;
 import com.example.achuan.bombtest.model.bean.TeacherBean;
-import com.example.achuan.bombtest.util.LogUtil;
 
 import java.util.List;
 
@@ -69,7 +68,7 @@ public class SigninDetailAdapter extends RecyclerView.Adapter<SigninDetailAdapte
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
                     index=position;//记录当前选中的radio的位置
-                    LogUtil.d("lyc-changeworld","选中了第"+index+"个radio");
+                    //LogUtil.d("lyc-changeworld","选中了第"+index+"个radio");
                     //刷新列表显示,会重新执行onBindViewHolder的方法
                     notifyDataSetChanged();
                 }

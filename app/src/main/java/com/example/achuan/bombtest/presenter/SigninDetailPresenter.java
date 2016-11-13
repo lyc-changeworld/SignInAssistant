@@ -9,6 +9,7 @@ import java.util.List;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * Created by achuan on 16-11-12.
@@ -31,10 +32,21 @@ public class SigninDetailPresenter extends RxPresenter<SigninDetailContract.View
             }
         });
     }
-
     //签到处理
     @Override
-    public void signinDeal() {
-
+    public void signinDeal(String Sno, String Cno, String Tno) {
+        //执行签到,并保存数据到网络端
+        BmobUtil.saveSigninDetailInfo(Sno,Cno,Tno).
+                save(new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        if(e==null){
+                            //显示签到成功
+                            mView.showSigninSuccess("签到成功(∩_∩)");
+                        }else{
+                            mView.showError("签到失败ヽ(≧Д≦)ノ");
+                        }
+                    }
+                });
     }
 }

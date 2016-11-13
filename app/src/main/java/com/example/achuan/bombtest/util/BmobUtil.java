@@ -5,6 +5,7 @@ import android.widget.Toast;
 import com.example.achuan.bombtest.app.App;
 import com.example.achuan.bombtest.model.bean.CourseBean;
 import com.example.achuan.bombtest.model.bean.MyUser;
+import com.example.achuan.bombtest.model.bean.SigninRecordBean;
 import com.example.achuan.bombtest.model.bean.TeacherBean;
 
 import cn.bmob.v3.BmobQuery;
@@ -149,7 +150,7 @@ public class BmobUtil {
         return query;
     }
 
-    /***.1 查询全部的教师数据***/
+    /***.3 查询全部的教师数据***/
     public static BmobQuery<TeacherBean> teacherBmobQueryAll(){
         final BmobQuery<TeacherBean> query = new BmobQuery<TeacherBean>();
         // 根据Semester字段升序显示数据（由小到大）
@@ -164,7 +165,22 @@ public class BmobUtil {
         });*/
         return query;
     }
-
+    /***.4 添加数据到签到记录表中***/
+    public static SigninRecordBean saveSigninDetailInfo(String Sno,String Cno,String Tno){
+        SigninRecordBean signinRecordBean=new SigninRecordBean();
+        signinRecordBean.setSno(Sno);
+        signinRecordBean.setCno(Cno);
+        signinRecordBean.setTno(Tno);
+        /*signinRecordBean.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if(e==null){
+                }else{
+                }
+            }
+        });*/
+        return signinRecordBean;
+    }
 
 
 

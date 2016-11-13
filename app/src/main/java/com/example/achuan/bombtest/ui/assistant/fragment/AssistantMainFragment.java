@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 public class AssistantMainFragment extends SimpleFragment {
 
     //顶部导航标签文字
-    String[] tabTitle = new String[]{"签到","投票","客服"};
+    String[] tabTitle = new String[]{"课程签到","投票","客服"};
     //定义一个fragment集合实例来存储对应要滑动显示的多个fragment实例
     List<Fragment> fragments = new ArrayList<Fragment>();
     AssistantMainAdapter mAssistantMainAdapter;

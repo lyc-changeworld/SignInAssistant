@@ -15,13 +15,13 @@ public interface SigninDetailContract {
         //显示列表内容的方法
         void showContent(List<TeacherBean> mList);
         //显示签到成功
-        void showSigninSuccess();
+        void showSigninSuccess(String message);
     }
     //presenter层接口方法
     interface  Presenter extends BasePresenter<View> {
         //获取课程对应的任课老师的数据
         void getTeacherData();
         //签到处理
-        void signinDeal();
+        void signinDeal(String Sno,String Cno,String Tno);
     }
 }

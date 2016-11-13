@@ -18,17 +18,17 @@
         android:textSize="17sp"/>
     <Button
         android:id="@+id/bt_signin"
-        android:layout_width="150dp"
+        android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_marginBottom="15dp"
         android:layout_marginTop="5dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/bt_bg_white"
+        android:background="@drawable/bt_bg_blue"
         android:text="@string/signIn"
         android:textColor="@color/white"
         android:textSize="15sp"
-        android:enabled="false"/>
+        android:gravity="center"/>
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
