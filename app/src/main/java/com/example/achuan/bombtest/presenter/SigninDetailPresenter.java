@@ -36,7 +36,7 @@ public class SigninDetailPresenter extends RxPresenter<SigninDetailContract.View
     @Override
     public void signinDeal(String Sno, String Cno, String Tno) {
         //执行签到,并保存数据到网络端
-        BmobUtil.saveSigninDetailInfo(Sno,Cno,Tno).
+        BmobUtil.signinDetailBmobSave(Sno,Cno,Tno).
                 save(new SaveListener<String>() {
                     @Override
                     public void done(String s, BmobException e) {

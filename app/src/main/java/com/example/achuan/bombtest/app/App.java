@@ -32,7 +32,7 @@ public class App extends Application
     //声明一个全局变量来记录登录状态
     private static boolean isLogin;
     //声明一个全局变量来引用当前登录的缓存用户对象
-    private static BmobUser sBmobUser;
+    private static MyUser sMyUser;
 
 
     //单例模式,避免内存造成浪费,需要实例化该类时才将其实例化
@@ -50,16 +50,15 @@ public class App extends Application
         instance = this;
         sContext=getApplicationContext();//获得一个应用程序级别的Context
         /***进行判断,标记登录的状态***/
-        MyUser bmobUser = BmobUser.getCurrentUser(MyUser.class);
-        if(bmobUser!=null){
+        MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
+        if(myUser!=null){
             setIsLogin(true);//设置状态为:登录
-            setBmobUser(bmobUser);
+            setMyUser(myUser);
         }else {
             setIsLogin(false);//设置状态为:未登录
-            setBmobUser(null);
+            setMyUser(null);
         }
     }
-
     //登录状态的set和get方法
     public static boolean getIsLogin() {
         return isLogin;
@@ -68,11 +67,11 @@ public class App extends Application
         App.isLogin = isLogin;
     }
     //本地缓存的用户对象的set和get方法
-    public static BmobUser getBmobUser() {
-        return sBmobUser;
+    public static MyUser getMyUser() {
+        return sMyUser;
     }
-    public static void setBmobUser(BmobUser bmobUser) {
-        sBmobUser = bmobUser;
+    public static void setMyUser(MyUser myUser) {
+        sMyUser = myUser;
     }
 
     //1-全局Context的获取

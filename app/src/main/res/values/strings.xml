@@ -12,7 +12,7 @@
     <string name="clickLogin">点击登录</string>
     <string name="loginInfo">体验更多功能</string>
     <string name="userSignature">个性签名</string>
-    <string name="clickSetting">点击设置信息</string>
+    <string name="clickSetting">点击编辑信息</string>
     <!--1.2-NavigationView部分-->
     <!--1.2.1-功能模块-->
     <string name="drawer_group_function">功能</string>
@@ -54,6 +54,11 @@
     <string name="signIn">签 到</string>
     <string name="action_search">搜索</string>
     <string name="selectTeacher_info">选择任课老师:</string>
+    <!---->
+    <string name="person_signature">你的时间有限，所以不要为别人而活。不要被教条所限
+            ，不要活在别人的观念里。不要让别人的意见左右自己内心的声音。最重要的是，
+            勇敢的去追随自己的心灵和直觉，只有自己的心灵和直觉才知道你自己的真实想法
+            ，其他一切都是次要。</string>
 
 
 </resources>

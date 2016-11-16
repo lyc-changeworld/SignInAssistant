@@ -15,7 +15,7 @@ import com.example.achuan.bombtest.R;
 import com.example.achuan.bombtest.app.App;
 import com.example.achuan.bombtest.base.SimpleFragment;
 import com.example.achuan.bombtest.model.bean.MyUser;
-import com.example.achuan.bombtest.util.AlertDialogUtil;
+import com.example.achuan.bombtest.util.DialogUtil;
 import com.example.achuan.bombtest.util.BmobUtil;
 import com.example.achuan.bombtest.util.SharedPreferenceUtil;
 
@@ -98,8 +98,8 @@ public class SettingFragment extends SimpleFragment implements CompoundButton.On
 
     //弹出对话框,确认是否退出账号
     private void showLogout() {
-        AlertDialogUtil.createDialog(getContext(), "提示", "确定要退出当前账号吗?", "退出登录", "取消",
-                new AlertDialogUtil.OnAlertDialogButtonClickListener() {
+        DialogUtil.createOrdinaryDialog(getContext(), "提示", "确定要退出当前账号吗?", "退出登录", "取消",
+                new DialogUtil.OnAlertDialogButtonClickListener() {
                     @Override
                     public void onRightButtonClick() {
                         mBtLogout.setVisibility(View.INVISIBLE);
@@ -107,7 +107,7 @@ public class SettingFragment extends SimpleFragment implements CompoundButton.On
                         BmobUtil.userLogOut();
                         //更新登录的全局变量
                         App.getInstance().setIsLogin(false);
-                        App.getInstance().setBmobUser(BmobUser.getCurrentUser(MyUser.class));
+                        App.getInstance().setMyUser(BmobUser.getCurrentUser(MyUser.class));
                         //重置用户信息显示布局
                         TextView mTV_nickName= (TextView) getActivity().findViewById(R.id.tv_nickName);
                         TextView mTV_userInfo= (TextView) getActivity().findViewById(R.id.tv_userInfo);

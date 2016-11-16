@@ -15,7 +15,7 @@ import com.example.achuan.bombtest.model.bean.TeacherBean;
 import com.example.achuan.bombtest.presenter.SigninDetailPresenter;
 import com.example.achuan.bombtest.presenter.contract.SigninDetailContract;
 import com.example.achuan.bombtest.ui.assistant.adapter.SigninDetailAdapter;
-import com.example.achuan.bombtest.util.AlertDialogUtil;
+import com.example.achuan.bombtest.util.DialogUtil;
 import com.example.achuan.bombtest.util.SnackbarUtil;
 import com.victor.loading.rotate.RotateLoading;
 
@@ -118,8 +118,8 @@ public class SigninDetailActivity extends BaseActivity<SigninDetailPresenter> im
         //获取当前选择的item的位置号
         index=mSigninDetailAdapter.getIndex();
         if(index!=-1){
-            AlertDialogUtil.createDialog(this,"提示","确定要签到吗","确定","取消",
-                    new AlertDialogUtil.OnAlertDialogButtonClickListener() {
+            DialogUtil.createOrdinaryDialog(this,"提示","确定要签到吗","确定","取消",
+                    new DialogUtil.OnAlertDialogButtonClickListener() {
                         @Override
                         public void onRightButtonClick() {
                             //根据选择的radio的位置获取对应的教工号

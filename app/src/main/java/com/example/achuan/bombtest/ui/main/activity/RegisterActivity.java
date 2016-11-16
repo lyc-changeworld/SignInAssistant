@@ -165,7 +165,7 @@ public class RegisterActivity extends SimpleActivity {
                                                         /*****登录成功后关闭登录界面*****/
                                                         //更新登录的全局变量
                                                         App.getInstance().setIsLogin(true);
-                                                        App.getInstance().setBmobUser(BmobUser.getCurrentUser(MyUser.class));
+                                                        App.getInstance().setMyUser(BmobUser.getCurrentUser(MyUser.class));
                                                         RegisterActivity.this.finish();//跳转后清除内存
                                                         LoginActivity.getInstance().finish();//销毁之前保存的登录界面
                                                         /*new Handler().postDelayed(new Runnable() {

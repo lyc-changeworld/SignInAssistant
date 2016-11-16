@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.achuan.bombtest.R;
 import com.example.achuan.bombtest.app.App;
@@ -21,7 +20,7 @@ import com.example.achuan.bombtest.presenter.MainPresenter;
 import com.example.achuan.bombtest.presenter.contract.MainContract;
 import com.example.achuan.bombtest.ui.assistant.fragment.AssistantMainFragment;
 import com.example.achuan.bombtest.ui.main.fragment.SettingFragment;
-import com.example.achuan.bombtest.util.AlertDialogUtil;
+import com.example.achuan.bombtest.util.DialogUtil;
 import com.example.achuan.bombtest.util.SharedPreferenceUtil;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -110,9 +109,9 @@ public class MainActivity extends BaseActivity<MainPresenter>
             public void onClick(View view) {
                 if (App.getInstance().getIsLogin()) {
                     //跳转到修改个人资料的界面
-                    Toast.makeText(MainActivity.this,
-                            "修改个人资料",
-                            Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(MainActivity.this,
+                            ProfileSettingActivity.class);
+                    startActivity(intent);
                 } else {
                     //跳转到登录界面
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -173,7 +172,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
         //交互的同时更新显示的内容
         if (App.getInstance().getIsLogin()) {
             //显示用户名称
-            mTV_nickName.setText(App.getBmobUser().getUsername());
+            mTV_nickName.setText(App.getMyUser().getUsername());
             mTV_userInfo.setText(R.string.clickSetting);
         } else {
             mTV_nickName.setText(R.string.clickLogin);
@@ -261,8 +260,8 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     //弹出对话框,确认是否退出App
     private void showExitDialog() {
-        AlertDialogUtil.createDialog(this, "提示", "确定退出签到助手吗", "确定", "取消",
-                new AlertDialogUtil.OnAlertDialogButtonClickListener() {
+        DialogUtil.createOrdinaryDialog(this, "提示", "确定退出签到助手吗", "确定", "取消",
+                new DialogUtil.OnAlertDialogButtonClickListener() {
                     @Override
                     public void onRightButtonClick() {
                         //BluetoothUtil.getBluetooth().disable();//退出应用后关闭蓝牙

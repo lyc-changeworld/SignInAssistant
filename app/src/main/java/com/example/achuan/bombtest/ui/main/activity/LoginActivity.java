@@ -90,6 +90,8 @@ public class LoginActivity extends SimpleActivity {
                 //跳转到mob的短信验证界面
                 MobUtil.registerBySms(LoginActivity.this);
                 //等到短信验证成功并跳转到注册界面才将当前创建的loginActivity销毁
+                /*Intent intent=new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(intent);*/
                 break;
         }
     }
@@ -150,7 +152,7 @@ public class LoginActivity extends SimpleActivity {
                                             /*****登录成功后关闭登录界面*****/
                                             //更新登录的全局变量
                                             App.getInstance().setIsLogin(true);
-                                            App.getInstance().setBmobUser(BmobUser.getCurrentUser(MyUser.class));
+                                            App.getInstance().setMyUser(BmobUser.getCurrentUser(MyUser.class));
                                             LoginActivity.this.finish();//结束当前activity
                                             /*new Handler().postDelayed(new Runnable() {
                                                 public void run() {

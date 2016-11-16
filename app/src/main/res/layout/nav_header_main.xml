@@ -12,7 +12,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
-        android:src="@drawable/noicon"
+        android:src="@drawable/user_96"
         app:border_width="1dp"/>
     <LinearLayout
         android:id="@+id/text_ll"

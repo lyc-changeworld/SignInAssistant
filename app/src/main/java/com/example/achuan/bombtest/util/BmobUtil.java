@@ -6,12 +6,12 @@ import com.example.achuan.bombtest.app.App;
 import com.example.achuan.bombtest.model.bean.CourseBean;
 import com.example.achuan.bombtest.model.bean.MyUser;
 import com.example.achuan.bombtest.model.bean.SigninRecordBean;
+import com.example.achuan.bombtest.model.bean.StudentBean;
 import com.example.achuan.bombtest.model.bean.TeacherBean;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
@@ -31,6 +31,11 @@ public class BmobUtil {
         //这里直接将用户注册时输入的密码上传到服务器,后续将实现加密处理后提交
         bmobUser.setPassword(password);//设置密码
         bmobUser.setMobilePhoneNumber(phone);//设置手机号码
+        bmobUser.setNickName(phone);//初始化昵称＝＝手机号
+        bmobUser.setSex("男");
+        bmobUser.setAge(0);
+        bmobUser.setEmail("xxx@xxx.com");
+        bmobUser.setSignature("编辑个性签名");
         //bmobUser.setEmail(email);//设置邮箱地址
         /*//注意：不能用save方法进行注册
         bmobUser.signUp(new SaveListener<MyUser>() {
@@ -100,22 +105,22 @@ public class BmobUtil {
         //MyUser中的扩展属性
         Integer age = (Integer) BmobUser.getObjectByKey("age");
         Boolean sex = (Boolean) BmobUser.getObjectByKey("sex");*/
-    /***.6 更新用户***/
-    //很多情况下你可能需要修改用户信息，比如你的应用具备修改个人资料的功能
-    //新建一个用户对象，并调用update(objectId,updateListener)方法来更新（推荐使用），示例：
-    /*BmobUser newUser = new BmobUser();
-    newUser.setEmail("xxx@163.com");
-    BmobUser bmobUser = BmobUser.getCurrentUser(App.getContext());
-    newUser.update(bmobUser.getObjectId(),new UpdateListener() {
-        @Override
-        public void done(BmobException e) {
-            if(e==null){
-            }else{
+    /***.6 根据键值更新用户对应的信息***/
+    public static MyUser userBmobUpdate(String key,Object value){
+        MyUser myUser=new MyUser();
+        myUser.setValue(key,value);
+        /*bmobUser.update(, new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
             }
-        }
-    });*/
-     /**************************2-查询数据************************/
-    /***.1 查询全部的课程***/
+        });*/
+        //修改数据只能通过objectId来修改，目前不提供查询条件方式的修改方法。
+        return myUser;
+    }
+
+
+     /**************************课程查询相关************************/
+    /***. 1查询全部的课程***/
     public static BmobQuery<CourseBean> courseBmobQueryAll(){
         final BmobQuery<CourseBean> query = new BmobQuery<CourseBean>();
         // 根据Semester字段升序显示数据（由小到大）
@@ -130,7 +135,7 @@ public class BmobUtil {
         });*/
         return query;
     }
-    /***.2 查询包含输入关键字的课程***/
+    /***. 2查询包含输入关键字的课程***/
     public static BmobQuery<CourseBean> courseBmobQueryFromKeyword(String keyword){
         final BmobQuery<CourseBean> query = new BmobQuery<CourseBean>();
         /*目前模糊查询已经改成收费用户才能使用了*/
@@ -150,7 +155,8 @@ public class BmobUtil {
         return query;
     }
 
-    /***.3 查询全部的教师数据***/
+    /**************************签到相关************************/
+    /***.　1查询全部的教师数据***/
     public static BmobQuery<TeacherBean> teacherBmobQueryAll(){
         final BmobQuery<TeacherBean> query = new BmobQuery<TeacherBean>();
         // 根据Semester字段升序显示数据（由小到大）
@@ -165,8 +171,8 @@ public class BmobUtil {
         });*/
         return query;
     }
-    /***.4 添加数据到签到记录表中***/
-    public static SigninRecordBean saveSigninDetailInfo(String Sno,String Cno,String Tno){
+    /***. 2添加数据到签到记录表中***/
+    public static SigninRecordBean signinDetailBmobSave(String Sno,String Cno,String Tno){
         SigninRecordBean signinRecordBean=new SigninRecordBean();
         signinRecordBean.setSno(Sno);
         signinRecordBean.setCno(Cno);
@@ -182,7 +188,55 @@ public class BmobUtil {
         return signinRecordBean;
     }
 
+    /**************************学生信息相关************************/
+    /***. 1通过手机号来查询对应的学生数据是否存在***/
+    public static BmobQuery<StudentBean> studentQuery(String mobilePhoneNumber){
+        final BmobQuery<StudentBean> query = new BmobQuery<StudentBean>();
+        query.addWhereEqualTo("mobilePhoneNumber", mobilePhoneNumber);//一个用户名对应一个用户
+        /*query.findObjects(new FindListener<StudentBean>() {
+            @Override
+            public void done(List<StudentBean> list, BmobException e) {
+                if(e==null){
+                    if (list.size()>0){
+                        //提示学生信息已经存在,无需构造新的一行
+                    }else {
+                        //不存在,接着构造新的一行学生数据
 
+                    }
+                }else{
+                }
+            }
+        });*/
+        return query;
+    }
+    /***.2 添加一条只带手机号的数据到学生信息表中***/
+    public static StudentBean StudentBmobSave(String mobilePhoneNumber){
+        StudentBean studentBean=new StudentBean();
+        studentBean.setMobilePhoneNumber(mobilePhoneNumber);
+        /*studentBean.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if(e==null){
+                }else{
+                }
+            }
+        });*/
+        return studentBean;
+    }
+    /***.3 根据键值更新学生成员对应的信息***//*
+    public static StudentBean StudentBmobUpdate(String key,String value){
+        StudentBean studentBean=new StudentBean();
+        studentBean.setValue(key,value);
+        *//*studentBean.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if(e==null){
+                }else{
+                }
+            }
+        });*//*
+        return studentBean;
+    }*/
 
     /***.5 邮箱重置密码***/
     //邮箱重置密码的流程如下：
@@ -206,55 +260,8 @@ public class BmobUtil {
             }
         });
     }
-    /***.7 密码修改***/
-    //自V3.4.3版本开始，SDK为开发者提供了直接修改当前用户登录密码的方法，只需要传入旧密码和新密码，
-    // 然后调用BmobUser提供的静态方法updateCurrentUserPassword即可，以下是示例：
-    public static void changePassword(String oldPassword,String newPassword){
-        BmobUser.updateCurrentUserPassword(oldPassword, newPassword, new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
-                if(e==null){
-                    Toast.makeText(App.getInstance().getContext(),"密码修改成功，可以用新密码进行登录啦",
-                            Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(App.getInstance().getContext(),"失败:" + e.getMessage(),
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-    /*********************6.8 邮箱相关*******************/
-    /***6.8.1 邮箱登录***/
-    //新增邮箱+密码登录方式,可以通过loginByAccount方法来操作：
-    public static void userLogInByEmail(String email,String password){
-        BmobUser.loginByAccount(email, password, new LogInListener<MyUser>() {
-            @Override
-            public void done(MyUser user, BmobException e) {
-                if(user!=null){
-                    LogUtil.d(TAG,"用户登陆成功");
-                }
-            }
-        });
-    }
-    /***6.8.2 请求验证Email***/
-    //当一个用户的邮件被新添加或者修改过的话，emailVerified会被默认设为false，
-    // 如果应用设置中开启了邮箱认证功能，Bmob会对用户填写的邮箱发送一个链接,
-    // 这个链接可以把emailVerified设置为 true.
-    public static void requestEmailVerify(final String email){
-        BmobUser.requestEmailVerify(email, new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
-                if(e==null){
-                    Toast.makeText(App.getInstance().getContext(),
-                            "请求验证邮件成功，请到" + email + "邮箱中进行激活。",
-                            Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(App.getInstance().getContext(),
-                            "失败:" + e.getMessage(),
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
+
+
+
 
 }
