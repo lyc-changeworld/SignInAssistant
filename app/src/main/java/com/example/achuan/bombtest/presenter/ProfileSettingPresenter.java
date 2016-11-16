@@ -52,8 +52,11 @@ public class ProfileSettingPresenter extends RxPresenter<ProfileSettingContract
                 mView.hideLoading();
                 if(e==null){
                 }else {
-                    mView.showError("数据更新失败ヽ(≧Д≦)ノ");
-                    //mView.showError(e.getMessage());
+                    //mView.showError("数据更新失败ヽ(≧Д≦)ノ");
+                    mView.showError(e.getMessage());
+                    //LogUtil.e("lyc-changeworld",e.getMessage());
+                    //出现错误：User cannot be altered without sessionToken Error的原因
+                    //用户在别的地方登录导致sessionToken发生了改变
                 }
             }
         });

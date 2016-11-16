@@ -130,7 +130,7 @@ public class ProfileSettingActivity extends BaseActivity<ProfileSettingContract.
                 });
                 break;
             case R.id.rt_age:
-                DialogUtil.createDatePickerDialog(this,"请选择出生日期",
+                DialogUtil.createDatePickerDialog(this,"请选择出生日期","确定","取消",
                         new DialogUtil.OnDatePickerDialogButtonClickListener() {
                             @Override
                             public void onRightButtonClick(Boolean isBorn,int age,String StarSeat) {
@@ -190,29 +190,6 @@ public class ProfileSettingActivity extends BaseActivity<ProfileSettingContract.
                         });
                 break;
         }
-    }
-
-    public void show(){
-        Dialog dialog = new Dialog(this);
-        //去除掉对话框的标题栏
-        View bv = dialog.findViewById(android.R.id.title);
-        bv.setVisibility(View.GONE);
-        //将布局设置给Dialog
-        dialog.setContentView(R.layout.view_bottom_dialog);
-        //初始化布局控件
-        TextView chooseMan= (TextView) dialog.findViewById(R.id.tv_choose_man);
-        TextView chooseWoman= (TextView) dialog.findViewById(R.id.tv_choose_woman);
-        TextView chooseCancel= (TextView) dialog.findViewById(R.id.tv_choose_cancel);
-        /*//获取当前Activity所在的窗体
-        Window dialogWindow = dialog.getWindow();
-        //设置Dialog从窗体底部弹出
-        dialogWindow.setGravity( Gravity.BOTTOM);
-        //获得窗体的属性
-        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        lp.y = 0;//设置Dialog距离底部的距离
-        //将属性设置给窗体
-        dialogWindow.setAttributes(lp);*/
-        dialog.show();//显示对话框
     }
 
     //显示网络后台端用户的信息

@@ -124,6 +124,7 @@ public class DialogUtil {
 
     /***５-创建时间选择器框***/
     public static void createDatePickerDialog(Context context,String title,
+                                              String rightString, String leftString,
                                               final OnDatePickerDialogButtonClickListener onDatePickerDialogButtonClickListener){
         //获取日历操作对象
         final Calendar calendar = Calendar.getInstance();
@@ -133,39 +134,52 @@ public class DialogUtil {
         final int nowMonth=calendar.get(Calendar.MONTH);//月
         final int nowDayOfMonth=calendar.get(Calendar.DAY_OF_MONTH);//日
         //创建时间选择器窗口
-        Dialog dialog = new DatePickerDialog(context,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker dp, int year,
-                                          int month, int dayOfMonth) {
-                        Boolean isBorn = null;//记录你是否出生
-                        int age = 0;
-                        String StarSeat = null;//记录星座
-                        //判断当前选择的时间
-                        if(year>nowYear){
-                            isBorn=false;
-                        }else if(year==nowYear){
-                            if(month>nowMonth){
-                                isBorn=false;
-                            }else if(month==nowMonth){
-                                if(dayOfMonth>nowDayOfMonth){
-                                    isBorn=false;
-                                }else {isBorn=true;}
-                            }else {isBorn=true;}
-                        }else {isBorn=true;}
-                        /*出生了才计算年龄和推算星座*/
-                        if(isBorn){
-                            age=nowYear-year;
-                            StarSeat=StringUtil.getStarSeat(month + 1, dayOfMonth);
-                        }
-                        onDatePickerDialogButtonClickListener.onRightButtonClick(
-                                isBorn,age,StarSeat);
-                    }
-                }, calendar.get(Calendar.YEAR), // 传入年份
+        final DatePickerDialog dialog = new DatePickerDialog(context,null,//设置初始日期
+                calendar.get(Calendar.YEAR), // 传入年份
                 calendar.get(Calendar.MONTH), // 传入月份
                 calendar.get(Calendar.DAY_OF_MONTH)); // 传入天数
+        //右边按钮点击事件
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE,rightString, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //通过dialog.getDatePicker()获得dialog上的DatePicker组件，然后可以获取日期信息
+                DatePicker datePicker = dialog.getDatePicker();
+                int year = datePicker.getYear();
+                int month = datePicker.getMonth();
+                int dayOfMonth = datePicker.getDayOfMonth();
+                Boolean isBorn = null;//记录你是否出生
+                int age = 0;
+                String StarSeat = null;//记录星座
+                //判断当前选择的时间
+                if(year>nowYear){
+                    isBorn=false;
+                }else if(year==nowYear){
+                    if(month>nowMonth){
+                        isBorn=false;
+                    }else if(month==nowMonth){
+                        if(dayOfMonth>nowDayOfMonth){
+                            isBorn=false;
+                        }else {isBorn=true;}
+                    }else {isBorn=true;}
+                }else {isBorn=true;}
+                /*出生了才计算年龄和推算星座*/
+                if(isBorn){
+                    age=nowYear-year;
+                    StarSeat=StringUtil.getStarSeat(month + 1, dayOfMonth);
+                }
+                onDatePickerDialogButtonClickListener.onRightButtonClick(
+                        isBorn,age,StarSeat);
+            }
+        });
+        //左边按钮点击事件
+        dialog.setButton(DialogInterface.BUTTON_NEGATIVE,leftString,new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onDatePickerDialogButtonClickListener.onLeftButtonClick();
+            }
+        });
         //设置点击控件外的位置,是否取消时间选择操作,默认为true(取消)
-        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCanceledOnTouchOutside(true);
         dialog.setTitle(title);
         dialog.show();
     }
