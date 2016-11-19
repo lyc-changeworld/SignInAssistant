@@ -16,13 +16,19 @@ import com.example.achuan.bombtest.R;
 import com.example.achuan.bombtest.app.App;
 import com.example.achuan.bombtest.app.Constants;
 import com.example.achuan.bombtest.base.BaseActivity;
+import com.example.achuan.bombtest.model.bean.MyUser;
 import com.example.achuan.bombtest.presenter.MainPresenter;
 import com.example.achuan.bombtest.presenter.contract.MainContract;
 import com.example.achuan.bombtest.ui.assistant.fragment.AssistantMainFragment;
 import com.example.achuan.bombtest.ui.main.fragment.SettingFragment;
 import com.example.achuan.bombtest.util.DialogUtil;
+import com.example.achuan.bombtest.util.ImageUtil;
 import com.example.achuan.bombtest.util.SharedPreferenceUtil;
+import com.example.achuan.bombtest.util.SnackbarUtil;
+import com.example.achuan.bombtest.widget.CircleImageView;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
+import java.io.File;
 
 import butterknife.BindView;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -40,8 +46,9 @@ public class MainActivity extends BaseActivity<MainPresenter>
     MaterialSearchView mViewSearch;
 
     RelativeLayout mNavViewHeaderView;//左侧的头部布局
-    TextView mTV_nickName;//用户名
-    TextView mTV_userInfo;//用户信息
+    TextView mTV_nickName;//用户昵称
+    TextView mTV_userSignature;//用户的个性签名
+    CircleImageView mCircleImageView;//圆形头像
 
     ActionBarDrawerToggle mDrawerToggle;//左侧部分打开按钮
     //fragment的引用变量
@@ -101,7 +108,8 @@ public class MainActivity extends BaseActivity<MainPresenter>
         mNavViewHeaderView = (RelativeLayout) mNavView.getHeaderView(0);
         //加载nav_header_main中的子元素控件
         mTV_nickName = (TextView) mNavViewHeaderView.findViewById(R.id.tv_nickName);
-        mTV_userInfo = (TextView) mNavViewHeaderView.findViewById(R.id.tv_userInfo);
+        mTV_userSignature= (TextView) mNavViewHeaderView.findViewById(R.id.tv_userSignature);
+        mCircleImageView= (CircleImageView) mNavViewHeaderView.findViewById(R.id.iv_headIcon);
 
         //对navView头部的布局进行点击事件监听,登录和非登录时触发效果不一样
         mNavViewHeaderView.setOnClickListener(new View.OnClickListener() {
@@ -115,12 +123,10 @@ public class MainActivity extends BaseActivity<MainPresenter>
                 } else {
                     //跳转到登录界面
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    //该方法启动活动后,会在活动销毁的时候返回一个结果给上一个活动
                     startActivity(intent);
                 }
             }
         });
-
         /*为search_view添加查询监听事件*//*
         mViewSearch.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
@@ -171,15 +177,43 @@ public class MainActivity extends BaseActivity<MainPresenter>
         super.onResume();
         //交互的同时更新显示的内容
         if (App.getInstance().getIsLogin()) {
+            MyUser myUser = App.getInstance().getMyUser();
+            /*头像判断显示*/
+            showHeadIcon(myUser.getUsername(),myUser.getHeadUri(),
+                    App.getInstance().getmOutputImage());
             //显示用户名称
-            mTV_nickName.setText(App.getMyUser().getUsername());
-            mTV_userInfo.setText(R.string.clickSetting);
+            mTV_nickName.setText(myUser.getNickName());
+            mTV_userSignature.setText(myUser.getSignature());
         } else {
+            //未登录状态下的显示
             mTV_nickName.setText(R.string.clickLogin);
-            mTV_userInfo.setText(R.string.loginInfo);
+            mTV_userSignature.setText("");
+            mCircleImageView.setImageBitmap(ImageUtil.decodeSampledBitmapFromResource(
+                    getResources(),R.drawable.nohead,50,50
+            ));
         }
     }
-
+    /***进行头像显示的判断***/
+    private void showHeadIcon(String userName,String userHeadUri,File mOutputImage){
+        if(userHeadUri!=null&&userHeadUri!=""){//说明用户有头像
+            //如果本地无图片,将后台的图片下载到本地
+            if(!mOutputImage.exists()){
+                mPresenter.downloadFile("head_"+userName+".jpg","",
+                        userHeadUri,mOutputImage);
+            }else {
+                mCircleImageView.setImageBitmap(ImageUtil.decodeSampledBitmapFromFile(
+                        mOutputImage.getPath(),50,50));
+            }
+        }else {//说明用户本身没有头像,只好显示"无头像"
+            mCircleImageView.setImageBitmap(ImageUtil.decodeSampledBitmapFromResource(
+                    getResources(),R.drawable.nohead,50,50));
+        }
+    }
+    @Override
+    public void showDownloadFileSuccess(String path) {
+        mCircleImageView.setImageBitmap(ImageUtil.decodeSampledBitmapFromFile(
+                path,50,50));
+    }
     /***
      * navigation的item点击事件监听方法实现
      ***/
@@ -290,6 +324,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     public void showError(String msg) {
-
+        SnackbarUtil.showShort(mDrawerLayout,msg);
     }
+
 }

@@ -5,11 +5,14 @@ import android.app.Application;
 import android.content.Context;
 
 import com.example.achuan.bombtest.model.bean.MyUser;
+import com.example.achuan.bombtest.util.FileUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobConfig;
 import cn.bmob.v3.BmobUser;
 import cn.smssdk.SMSSDK;
 /*
@@ -18,22 +21,18 @@ import cn.smssdk.SMSSDK;
 
 public class App extends Application
 {
-    /***在服务器端获取的Bmob应用ID***/
-    public static String BmobAppid ="f85e90d6599e09343fde6cf8410ff5a4";
-    /***在服务器端获取的Mob应用key和secret*/
-    private static String MobAppkey="18699bb95cfb8";
-    private static String MobAppsecret="79ac6771720ff687bb1c5cea3bcfbb0e";
-
     //单例模式定义变量,保证只会实例化一次
     private static App instance;
     private static Context sContext;//全局变量
     //声明一个数组来存储活动
     private static List<Activity> sActivities=new ArrayList<Activity>();
+    /******************全局单用户变量(属于某个用户的)********************/
     //声明一个全局变量来记录登录状态
     private static boolean isLogin;
     //声明一个全局变量来引用当前登录的缓存用户对象
     private static MyUser sMyUser;
-
+    //全局缓存地址
+    private static File diskCacheDir,mOutputImage;
 
     //单例模式,避免内存造成浪费,需要实例化该类时才将其实例化
     public static synchronized App getInstance() {
@@ -43,21 +42,52 @@ public class App extends Application
     @Override
     public void onCreate() {
         super.onCreate();
-        //初始化Bmob后台服务
-        Bmob.initialize(this,BmobAppid);
-        //初始化Mob的后台服务
-        SMSSDK.initSDK(this,MobAppkey,MobAppsecret);
         instance = this;
         sContext=getApplicationContext();//获得一个应用程序级别的Context
+        /*初始化Bmob后台服务*/
+        //设置BmobConfig
+        BmobConfig config =new BmobConfig.Builder(this).
+                setConnectTimeout(30).//请求超时时间（单位为秒）：默认15s
+                //文件分片上传时每片的大小（单位字节），默认512*1024
+                setUploadBlockSize(500*1024).
+                setApplicationId(Constants.BmobAppid).//设置appkey
+                setFileExpiration(2500)//文件的过期时间(单位为秒)：默认1800s
+                .build();
+        Bmob.initialize(config);
+        /*初始化Mob的后台服务*/
+        SMSSDK.initSDK(this,Constants.MobAppkey,Constants.MobAppsecret);
         /***进行判断,标记登录的状态***/
         MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
         if(myUser!=null){
             setIsLogin(true);//设置状态为:登录
             setMyUser(myUser);
+            App.getInstance().setDiskCacheDir(FileUtil.getDiskCacheDir
+                    (App.getInstance().getMyUser().getUsername()));
+            //建立一个新的子目录
+            if (!App.getInstance().getDiskCacheDir().exists()) {
+                App.getInstance().getDiskCacheDir().mkdir();
+            }
+            /*设置全局使用的头像file对象*/
+            App.getInstance().setmOutputImage(new File(App.getInstance().getDiskCacheDir(),
+                    "head_"+App.getInstance().getMyUser().getUsername()+".jpg"));
         }else {
             setIsLogin(false);//设置状态为:未登录
             setMyUser(null);
         }
+    }
+
+    public static File getmOutputImage() {
+        return mOutputImage;
+    }
+    public static void setmOutputImage(File mOutputImage) {
+        App.mOutputImage = mOutputImage;
+    }
+    //缓存路径
+    public static File getDiskCacheDir() {
+        return diskCacheDir;
+    }
+    public static void setDiskCacheDir(File diskCacheDir) {
+        App.diskCacheDir = diskCacheDir;
     }
     //登录状态的set和get方法
     public static boolean getIsLogin() {

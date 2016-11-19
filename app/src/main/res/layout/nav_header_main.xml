@@ -3,47 +3,48 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/nav_header_height"
-                android:background="@color/navHeader_blue"
+                android:background="@drawable/background_1"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark">
-    <com.example.achuan.bombtest.widget.CircleImageView
-        android:id="@+id/imageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp"
-        android:src="@drawable/user_96"
-        app:border_width="1dp"/>
-    <LinearLayout
-        android:id="@+id/text_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:orientation="vertical"
-        android:layout_toEndOf="@+id/imageView"
-        android:layout_marginLeft="10dp">
-        <TextView
-            android:id="@+id/tv_nickName"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="bottom"
-            android:text="@string/clickLogin"
-            android:textSize="15sp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-        <TextView
-            android:id="@+id/tv_userInfo"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="bottom"
-            android:textSize="15sp"
-            android:text="@string/loginInfo"/>
-    </LinearLayout>
+    <!--用户的个性签名-->
     <TextView
         android:id="@+id/tv_userSignature"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
-        android:layout_alignLeft="@+id/imageView"
-        android:layout_marginTop="10dp"
-        android:text="@string/userSignature"/>
+        android:layout_marginLeft="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+    <!--用户头像-->
+    <com.example.achuan.bombtest.widget.CircleImageView
+        android:id="@+id/iv_headIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/tv_userSignature"
+        android:layout_alignLeft="@+id/tv_userSignature"
+        app:border_width="1dp"/>
+    <!--用户的昵称-->
+    <TextView
+        android:id="@+id/tv_nickName"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_toEndOf="@+id/iv_headIcon"
+        android:layout_alignTop="@+id/iv_headIcon"
+        android:layout_alignBottom="@+id/iv_headIcon"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="15dp"
+        android:drawableRight="@drawable/more_white_24"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        />
 </RelativeLayout>

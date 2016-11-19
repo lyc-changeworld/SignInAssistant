@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -185,7 +184,7 @@ public class DialogUtil {
     }
 
     /***6-创建自定义的对话框,layoutId(自定义的布局文件)***/
-    public static Dialog createMyselfDialog(Context context,int layoutId){
+    public static Dialog createMyselfDialog(Context context,int layoutId,int gravity){
         Dialog dialog = new Dialog(context);
         //去除掉对话框的标题栏
         View bv = dialog.findViewById(android.R.id.title);
@@ -195,7 +194,7 @@ public class DialogUtil {
         //获取当前Activity所在的窗体
         Window dialogWindow = dialog.getWindow();
         //设置Dialog从窗体底部弹出
-        dialogWindow.setGravity( Gravity.BOTTOM);
+        dialogWindow.setGravity(gravity);
         /*//获得窗体的属性
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         lp.y = 0;//设置Dialog距离底部的距离

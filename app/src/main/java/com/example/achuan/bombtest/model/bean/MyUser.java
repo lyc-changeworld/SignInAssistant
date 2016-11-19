@@ -9,10 +9,19 @@ import cn.bmob.v3.BmobUser;
  */
 public class MyUser extends BmobUser {
     //扩展的信息
+    private String headUri;//头像在后台服务器端对应的链接地址
     private String nickName;//昵称
     private String sex;//性别
     private Integer age;//年龄
     private String signature;//个性签名
+
+    public String getHeadUri() {
+        return headUri;
+    }
+
+    public void setHeadUri(String headUri) {
+        this.headUri = headUri;
+    }
 
     public String getNickName() {
         return nickName;

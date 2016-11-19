@@ -10,11 +10,10 @@
 
     <include layout="@layout/view_toolbar"
              android:id="@+id/toolbar"/>
-
-
     <RelativeLayout
+        android:id="@+id/rt_headIcon"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="80dp"
         android:background="@color/white">
         <TextView
             android:layout_width="wrap_content"
@@ -24,18 +23,17 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textColor="@color/colorText"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:text="头像"/>
-        <ImageView
+        <com.example.achuan.bombtest.widget.CircleImageView
+            android:id="@+id/iv_headIcon"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_margin="10dp"
-            android:background="@drawable/user_96"/>
-
+            app:border_width="1dp"/>
     </RelativeLayout>
-
     <!--给条目中间添加间距-->
     <android.support.v4.widget.Space
         android:layout_width="match_parent"
@@ -54,7 +52,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textColor="@color/colorText"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:text="昵称"/>
         <TextView
             android:id="@+id/tv_nickName"
@@ -66,7 +64,7 @@
             android:paddingRight="10dp"
             android:drawableRight="@drawable/more_16"
             android:drawablePadding="10dp"
-            android:textSize="15sp"/>
+            android:textSize="14sp"/>
     </RelativeLayout>
     <!--性别-->
     <RelativeLayout
@@ -82,7 +80,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textColor="@color/colorText"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:text="性别"/>
         <TextView
             android:id="@+id/tv_sex"
@@ -94,7 +92,7 @@
             android:paddingRight="10dp"
             android:drawableRight="@drawable/more_16"
             android:drawablePadding="10dp"
-            android:textSize="15sp"/>
+            android:textSize="14sp"/>
     </RelativeLayout>
     <!--年龄-->
     <RelativeLayout
@@ -110,7 +108,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textColor="@color/colorText"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:text="年龄"/>
         <TextView
             android:id="@+id/tv_age"
@@ -122,7 +120,7 @@
             android:paddingRight="10dp"
             android:drawableRight="@drawable/more_16"
             android:drawablePadding="10dp"
-            android:textSize="15sp"/>
+            android:textSize="14sp"/>
     </RelativeLayout>
     <!--学生资料-->
     <TextView
@@ -135,7 +133,7 @@
         android:paddingRight="10dp"
         android:drawableRight="@drawable/more_16"
         android:drawablePadding="10dp"
-        android:textSize="16sp"
+        android:textSize="15sp"
         android:textColor="@color/colorText"
         android:text="学生信息"/>
     <!--邮箱设定-->
@@ -152,7 +150,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textColor="@color/colorText"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:text="绑定邮箱"/>
         <TextView
             android:id="@+id/tv_email"
@@ -164,7 +162,7 @@
             android:paddingRight="10dp"
             android:drawableRight="@drawable/more_16"
             android:drawablePadding="10dp"
-            android:textSize="15sp"/>
+            android:textSize="14sp"/>
     </RelativeLayout>
     <!--给条目中间添加间距-->
     <android.support.v4.widget.Space
@@ -183,7 +181,7 @@
             android:layout_margin="10dp"
             android:layout_alignParentLeft="true"
             android:textColor="@color/colorText"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:text="个性签名"/>
         <TextView
             android:id="@+id/tv_signature"
@@ -193,7 +191,7 @@
             android:layout_toEndOf="@+id/tv_info"
             android:drawableRight="@drawable/more_16"
             android:drawablePadding="10dp"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:maxLines="6"
             android:ellipsize="end"
             android:maxLength="120"/>

@@ -9,8 +9,11 @@ import com.example.achuan.bombtest.model.bean.SigninRecordBean;
 import com.example.achuan.bombtest.model.bean.StudentBean;
 import com.example.achuan.bombtest.model.bean.TeacherBean;
 
+import java.io.File;
+
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
 
@@ -119,7 +122,7 @@ public class BmobUtil {
     }
 
 
-     /**************************课程查询相关************************/
+     /**************************2-课程查询相关************************/
     /***. 1查询全部的课程***/
     public static BmobQuery<CourseBean> courseBmobQueryAll(){
         final BmobQuery<CourseBean> query = new BmobQuery<CourseBean>();
@@ -155,7 +158,7 @@ public class BmobUtil {
         return query;
     }
 
-    /**************************签到相关************************/
+    /**************************3-签到相关************************/
     /***.　1查询全部的教师数据***/
     public static BmobQuery<TeacherBean> teacherBmobQueryAll(){
         final BmobQuery<TeacherBean> query = new BmobQuery<TeacherBean>();
@@ -188,9 +191,9 @@ public class BmobUtil {
         return signinRecordBean;
     }
 
-    /**************************学生信息相关************************/
+    /**************************4-学生信息相关************************/
     /***. 1通过手机号来查询对应的学生数据是否存在***/
-    public static BmobQuery<StudentBean> studentQuery(String mobilePhoneNumber){
+    public static BmobQuery<StudentBean> studentBmobQuery(String mobilePhoneNumber){
         final BmobQuery<StudentBean> query = new BmobQuery<StudentBean>();
         query.addWhereEqualTo("mobilePhoneNumber", mobilePhoneNumber);//一个用户名对应一个用户
         /*query.findObjects(new FindListener<StudentBean>() {
@@ -238,6 +241,55 @@ public class BmobUtil {
         return studentBean;
     }*/
 
+    /**************************5-文件管理相关************************/
+    /***.　1上传单一文件***/
+    public static BmobFile fileBmobUpload(String picPath){
+        //String picPath = "sdcard/temp.jpg";
+        BmobFile bmobFile = new BmobFile(new File(picPath));
+        /*bmobFile.uploadblock(new UploadFileListener() {
+            @Override
+            public void done(BmobException e) {
+                if(e==null){
+                    //bmobFile.getFileUrl()--返回的上传文件的完整后台访问地址
+                }else{
+                }
+            }
+            @Override
+            public void onProgress(Integer value) {
+                //super.onProgress(value);
+                // 返回的上传进度（百分比）
+            }
+        });*/
+        return  bmobFile;
+    }
+    /***.　2删除单一文件***/
+    public static BmobFile fileBmobDelete(String headUrl){
+        BmobFile file = new BmobFile();
+        file.setUrl(headUrl);//此url是上传文件成功之后通过bmobFile.getUrl()方法获取的。
+        /*file.delete(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if(e==null){
+                }else{
+                }
+            }
+        });*/
+        return file;
+    }
+    /***.　3下载单一文件***/
+    public static BmobFile fileBmobDownload(String fileName,String group,String headUrl){
+        BmobFile bmobfile =new BmobFile(fileName,group,headUrl);
+        /*bmobfile.download(saveFile, new DownloadFileListener() {
+            @Override
+            public void done(String s, BmobException e) {
+            }
+            @Override
+            public void onProgress(Integer integer, long l) {
+            }
+        });*/
+        return bmobfile;
+    }
+
     /***.5 邮箱重置密码***/
     //邮箱重置密码的流程如下：
     //1-用户输入他们的电子邮件，请求重置自己的密码。
@@ -260,8 +312,4 @@ public class BmobUtil {
             }
         });
     }
-
-
-
-
 }

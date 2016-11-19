@@ -14,15 +14,16 @@ import android.widget.Toast;
 import com.example.achuan.bombtest.R;
 import com.example.achuan.bombtest.app.App;
 import com.example.achuan.bombtest.base.SimpleFragment;
-import com.example.achuan.bombtest.model.bean.MyUser;
-import com.example.achuan.bombtest.util.DialogUtil;
 import com.example.achuan.bombtest.util.BmobUtil;
+import com.example.achuan.bombtest.util.DialogUtil;
+import com.example.achuan.bombtest.util.FileUtil;
+import com.example.achuan.bombtest.util.ImageUtil;
 import com.example.achuan.bombtest.util.SharedPreferenceUtil;
+import com.example.achuan.bombtest.widget.CircleImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.bmob.v3.BmobUser;
 
 /**
  * Created by achuan on 16-10-30.
@@ -105,14 +106,27 @@ public class SettingFragment extends SimpleFragment implements CompoundButton.On
                         mBtLogout.setVisibility(View.INVISIBLE);
                         //退出账号,清除本地缓存用户对象
                         BmobUtil.userLogOut();
-                        //更新登录的全局变量
+                        /*****更新登录的全局变量*****/
                         App.getInstance().setIsLogin(false);
-                        App.getInstance().setMyUser(BmobUser.getCurrentUser(MyUser.class));
-                        //重置用户信息显示布局
+                        App.getInstance().setMyUser(null);
+                        //删除当前用户的缓存文件夹(名称＝＝手机号),并更新重置全局变量
+                        if(App.getInstance().getDiskCacheDir().exists()){
+                            //删除用户目录下的所有文件
+                            FileUtil.deleteAllFiles(App.getInstance().getDiskCacheDir());
+                            //将缓存用户信息的文件目录删除
+                            App.getInstance().getDiskCacheDir().delete();
+                        }
+                        App.getInstance().setDiskCacheDir(null);
+                        App.getInstance().setmOutputImage(null);
+                        /*****重置用户信息显示布局*****/
                         TextView mTV_nickName= (TextView) getActivity().findViewById(R.id.tv_nickName);
-                        TextView mTV_userInfo= (TextView) getActivity().findViewById(R.id.tv_userInfo);
+                        TextView mTV_userSignature=(TextView) getActivity().findViewById(R.id.tv_userSignature);
+                        CircleImageView mCircleImageView= (CircleImageView) getActivity().findViewById(R.id.iv_headIcon);
                         mTV_nickName.setText(R.string.clickLogin);
-                        mTV_userInfo.setText(R.string.loginInfo);
+                        mTV_userSignature.setText("");
+                        mCircleImageView.setImageBitmap(ImageUtil.decodeSampledBitmapFromResource(
+                                getResources(),R.drawable.nohead,50,50
+                        ));
                     }
                     @Override
                     public void onLeftButtonClick() {

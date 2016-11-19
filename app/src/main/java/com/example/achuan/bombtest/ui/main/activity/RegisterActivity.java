@@ -18,7 +18,9 @@ import com.example.achuan.bombtest.app.App;
 import com.example.achuan.bombtest.base.SimpleActivity;
 import com.example.achuan.bombtest.model.bean.MyUser;
 import com.example.achuan.bombtest.util.BmobUtil;
+import com.example.achuan.bombtest.util.FileUtil;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -162,16 +164,22 @@ public class RegisterActivity extends SimpleActivity {
                                                                 RegisterActivity.this,//在该activity显示
                                                                 "注册成功",//显示的内容
                                                                 Toast.LENGTH_SHORT).show();//显示的格式
-                                                        /*****登录成功后关闭登录界面*****/
-                                                        //更新登录的全局变量
+                                                        /*********************更新登录的全局变量****************/
                                                         App.getInstance().setIsLogin(true);
                                                         App.getInstance().setMyUser(BmobUser.getCurrentUser(MyUser.class));
+                                                        /*********全局设定缓存路径**********/
+                                                        App.getInstance().setDiskCacheDir(FileUtil.getDiskCacheDir
+                                                                (App.getInstance().getMyUser().getUsername()));
+                                                        //建立一个新的子目录
+                                                        if (!App.getInstance().getDiskCacheDir().exists()) {
+                                                            App.getInstance().getDiskCacheDir().mkdir();
+                                                        }
+                                                        /*设置全局使用的头像file对象*/
+                                                        App.getInstance().setmOutputImage(new File(App.getInstance().getDiskCacheDir(),
+                                                                "head_"+App.getInstance().getMyUser().getUsername()+".jpg"));
+
                                                         RegisterActivity.this.finish();//跳转后清除内存
                                                         LoginActivity.getInstance().finish();//销毁之前保存的登录界面
-                                                        /*new Handler().postDelayed(new Runnable() {
-                                                            public void run() {
-                                                            }
-                                                        }, 1000);//延时1秒*/
                                                     } else {
                                                         Toast.makeText(
                                                                 RegisterActivity.this,//在该activity显示

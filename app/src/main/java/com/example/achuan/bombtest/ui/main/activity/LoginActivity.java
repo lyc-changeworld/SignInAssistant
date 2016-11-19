@@ -16,8 +16,10 @@ import com.example.achuan.bombtest.app.App;
 import com.example.achuan.bombtest.base.SimpleActivity;
 import com.example.achuan.bombtest.model.bean.MyUser;
 import com.example.achuan.bombtest.util.BmobUtil;
+import com.example.achuan.bombtest.util.FileUtil;
 import com.example.achuan.bombtest.util.MobUtil;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -149,15 +151,21 @@ public class LoginActivity extends SimpleActivity {
                                             //通过BmobUser user = BmobUser.getCurrentUser()获取登录成功后的本地用户信息
                                             //如果是自定义用户对象MyUser，可通过MyUser user = BmobUser.getCurrentUser(MyUser.class)获取自定义用户信息
                                             //开始跳转
-                                            /*****登录成功后关闭登录界面*****/
-                                            //更新登录的全局变量
+                                            /*********************更新登录的全局变量****************/
                                             App.getInstance().setIsLogin(true);
                                             App.getInstance().setMyUser(BmobUser.getCurrentUser(MyUser.class));
+                                            /*********全局设定缓存路径**********/
+                                            App.getInstance().setDiskCacheDir(FileUtil.getDiskCacheDir
+                                                    (App.getInstance().getMyUser().getUsername()));
+                                            //建立一个新的子目录
+                                            if (!App.getInstance().getDiskCacheDir().exists()) {
+                                                App.getInstance().getDiskCacheDir().mkdir();
+                                            }
+                                            /*设置全局使用的头像file对象*/
+                                            App.getInstance().setmOutputImage(new File(App.getInstance().getDiskCacheDir(),
+                                                    "head_"+App.getInstance().getMyUser().getUsername()+".jpg"));
+
                                             LoginActivity.this.finish();//结束当前activity
-                                            /*new Handler().postDelayed(new Runnable() {
-                                                public void run() {
-                                                }
-                                            }, 1000);//延时1秒*/
                                         } else {
                                             Toast.makeText(LoginActivity.this,
                                                     "登录失败" + e.getMessage(),
