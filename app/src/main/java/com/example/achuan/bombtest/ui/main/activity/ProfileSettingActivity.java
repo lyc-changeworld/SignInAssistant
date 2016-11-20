@@ -26,7 +26,6 @@ import com.example.achuan.bombtest.util.ImageUtil;
 import com.example.achuan.bombtest.util.SnackbarUtil;
 
 import java.io.File;
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -99,8 +98,6 @@ public class ProfileSettingActivity extends BaseActivity<ProfileSettingContract.
         if(mOutputImageTakePhoto.exists()){
             mOutputImageTakePhoto.delete();
         }
-        //mOutputImage= new File(App.getInstance().getDiskCacheDir(),
-                //"head_"+userName+".jpg");
         //将File对象转换成Uri对象,标示着.jpg图片的唯一地址
         mImageUri=Uri.fromFile(App.getInstance().getmOutputImage());
         /***2-初始化显示用户信息(先去网络端加载,如果不成功再去本地加载缓存的用户信息)***/
@@ -116,15 +113,6 @@ public class ProfileSettingActivity extends BaseActivity<ProfileSettingContract.
         }else {//说明用户本身没有头像,只好显示"无头像"
             mIvHeadIcon.setImageBitmap(ImageUtil.decodeSampledBitmapFromResource(
                     getResources(),R.drawable.nohead,60,60));
-            /*if(!mOutputImage.exists()){
-                try {
-                    //第一次新创建的文件,长度为0
-                    mOutputImage.createNewFile();
-                    //LogUtil.d("lyc-changeworld", String.valueOf(mOutputImage.length()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }*/
         }
     }
     @Override
@@ -150,14 +138,6 @@ public class ProfileSettingActivity extends BaseActivity<ProfileSettingContract.
                 takePhoto.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //拍照时创建相片文件,使用完记得销毁该文件
-                        if(!mOutputImageTakePhoto.exists()){
-                            try {
-                                mOutputImageTakePhoto.createNewFile();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
                         mImageUriTakePhoto = Uri.fromFile(mOutputImageTakePhoto);
                         //隐式的Intent,系统会找出能够响应这个Intent的活动去启动
                         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");//添加意图为拍照
@@ -363,9 +343,14 @@ public class ProfileSettingActivity extends BaseActivity<ProfileSettingContract.
     //显示网络后台端用户的信息
     @Override
     public void showNetUserContent(MyUser myUser) {
-        //更新当前本地用户的信息
+        //让本地端缓存的用户信息和网络端同步
         mMyUser.setObjectId(myUser.getObjectId());
         mMyUser.setHeadUri(myUser.getHeadUri());
+        mMyUser.setNickName(myUser.getNickName());
+        mMyUser.setSex(myUser.getSex());
+        mMyUser.setAge(myUser.getAge());
+        mMyUser.setSignature(myUser.getSignature());
+        mMyUser.setEmail(myUser.getEmail());
         //显示当前用户的信息
         mTvNickName.setText(myUser.getNickName());
         mTvSex.setText(myUser.getSex());

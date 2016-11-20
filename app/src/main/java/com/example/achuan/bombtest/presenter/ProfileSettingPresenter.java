@@ -37,7 +37,8 @@ public class ProfileSettingPresenter extends RxPresenter<ProfileSettingContract
                 }else {
                     //网络加载失败时,显示本地用户的缓存信息
                     mView.showLocalUserContent();
-                    mView.showError("数据加载失败ヽ(≧Д≦)ノ");
+                    //mView.showError("数据加载失败ヽ(≧Д≦)ノ");
+                    mView.showError(e.getMessage());
                 }
             }
         });

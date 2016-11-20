@@ -1,6 +1,9 @@
 package com.example.achuan.bombtest.ui.main.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -76,6 +79,8 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     protected void initEventAndData() {
+        /********************检测并打开网络****************/
+        checkAndOpenNet(this);
         //初始化设置标题栏
         setToolBar(mToolbar, "签到助手");
         //初始化创建fragment实例对象
@@ -291,7 +296,38 @@ public class MainActivity extends BaseActivity<MainPresenter>
             showExitDialog();
         }
     }
-
+    //判断当前设备的网络是否打开,并提示是否跳转到网络设置界面
+    public void checkAndOpenNet(final Context context){
+        boolean isConnFlag=false;
+        ConnectivityManager conManager = (ConnectivityManager)context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo network = conManager.getActiveNetworkInfo();
+        if(network!=null){
+            isConnFlag=conManager.getActiveNetworkInfo().isAvailable();
+        }
+        if(!isConnFlag){
+            //Toast.makeText(context, "网络未连接", Toast.LENGTH_SHORT).show();
+            DialogUtil.createOrdinaryDialog(this,"提示","网络未连接,请设置网络",
+                    "设置网络", "取消", new DialogUtil.OnAlertDialogButtonClickListener() {
+                        @Override
+                        public void onRightButtonClick() {
+                            // 跳转到系统的网络设置界面
+                            Intent intent;
+                            // 先判断当前系统版本
+                            if(android.os.Build.VERSION.SDK_INT > 10){  // 3.0以上
+                                intent = new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
+                            }else{
+                                intent = new Intent();
+                                intent.setClassName("com.android.settings", "com.android.settings.WirelessSettings");
+                            }
+                            context.startActivity(intent);
+                        }
+                        @Override
+                        public void onLeftButtonClick() {
+                        }
+                    });
+        }
+    }
     //弹出对话框,确认是否退出App
     private void showExitDialog() {
         DialogUtil.createOrdinaryDialog(this, "提示", "确定退出签到助手吗", "确定", "取消",
@@ -308,7 +344,6 @@ public class MainActivity extends BaseActivity<MainPresenter>
                     }
                 });
     }
-
     //根据item编号获取fragment对象的方法
     private SupportFragment getTargetFragment(int item) {
         switch (item) {

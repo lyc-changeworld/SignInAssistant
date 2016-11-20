@@ -178,7 +178,7 @@ public class DialogUtil {
             }
         });
         //设置点击控件外的位置,是否取消时间选择操作,默认为true(取消)
-        dialog.setCanceledOnTouchOutside(true);
+        //dialog.setCanceledOnTouchOutside(true);
         dialog.setTitle(title);
         dialog.show();
     }
@@ -194,14 +194,14 @@ public class DialogUtil {
         //获取当前Activity所在的窗体
         Window dialogWindow = dialog.getWindow();
         //设置Dialog从窗体底部弹出
-        dialogWindow.setGravity(gravity);
+        dialogWindow.setGravity(gravity);//Gravity.BOTTOM
         /*//获得窗体的属性
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         lp.y = 0;//设置Dialog距离底部的距离
         //将属性设置给窗体
         dialogWindow.setAttributes(lp);*/
         dialog.show();//显示对话框
-        /*//初始化布局控件
+        /*//初始化自定义布局的控件,通过dialog实例来获取
         TextView chooseMan= (TextView) dialog.findViewById(R.id.tv_choose_man);
         TextView chooseWoman= (TextView) dialog.findViewById(R.id.tv_choose_woman);
         TextView chooseCancel= (TextView) dialog.findViewById(R.id.tv_choose_cancel);*/

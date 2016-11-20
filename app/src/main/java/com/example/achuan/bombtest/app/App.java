@@ -11,8 +11,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobConfig;
+import cn.bmob.v3.BmobInstallation;
 import cn.bmob.v3.BmobUser;
 import cn.smssdk.SMSSDK;
 /*
@@ -44,7 +46,7 @@ public class App extends Application
         super.onCreate();
         instance = this;
         sContext=getApplicationContext();//获得一个应用程序级别的Context
-        /*初始化Bmob后台服务*/
+        /******初始化Bmob后台服务*****/
         //设置BmobConfig
         BmobConfig config =new BmobConfig.Builder(this).
                 setConnectTimeout(30).//请求超时时间（单位为秒）：默认15s
@@ -54,9 +56,15 @@ public class App extends Application
                 setFileExpiration(2500)//文件的过期时间(单位为秒)：默认1800s
                 .build();
         Bmob.initialize(config);
-        /*初始化Mob的后台服务*/
+        //保存当前安装该应用的设备的信息,用该信息来进行设备定向消息推送
+        // 使用推送服务时的初始化操作
+        BmobInstallation.getCurrentInstallation().save();
+        // 启动推送服务
+        BmobPush.startWork(this);
+
+        /*****初始化Mob的后台服务*****/
         SMSSDK.initSDK(this,Constants.MobAppkey,Constants.MobAppsecret);
-        /***进行判断,标记登录的状态***/
+        /***进行判断,标记登录的状态,并装载全局变量***/
         MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
         if(myUser!=null){
             setIsLogin(true);//设置状态为:登录
@@ -73,9 +81,12 @@ public class App extends Application
         }else {
             setIsLogin(false);//设置状态为:未登录
             setMyUser(null);
+            setDiskCacheDir(null);
+            setmOutputImage(null);
         }
     }
 
+    //头像缓存地址
     public static File getmOutputImage() {
         return mOutputImage;
     }
@@ -103,7 +114,6 @@ public class App extends Application
     public static void setMyUser(MyUser myUser) {
         sMyUser = myUser;
     }
-
     //1-全局Context的获取
     public static Context getContext() {
         return sContext;//返回这个全局的Context
@@ -141,5 +151,7 @@ public class App extends Application
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(0);//将整个应用程序的进程KO掉
     }
+
+
 
 }
