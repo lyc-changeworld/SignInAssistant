@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
  * 注意事项：第一次显示列表时并没有发生滑动事件,此时并不会触发滑动状态改变的监听事件,所以需要
  * 　　　　　在scroll方法中添加一个初始化第一屏的图片加载事件
  */
-public class SigninAdapter extends RecyclerView.Adapter<SigninAdapter.ViewHolder> {
+public class SigninCourseAdapter extends RecyclerView.Adapter<SigninCourseAdapter.ViewHolder> {
 
     private LayoutInflater mInflater;//创建布局装载对象来获取相关控件（类似于findViewById()）
     private Context mContext;//显示框面
@@ -41,7 +41,7 @@ public class SigninAdapter extends RecyclerView.Adapter<SigninAdapter.ViewHolder
     }
 
     /*构造方法*/
-    public SigninAdapter(Context mContext, List<CourseBean> mList) {
+    public SigninCourseAdapter(Context mContext, List<CourseBean> mList) {
         this.mContext = mContext;
         this.mList = mList;
         //通过获取context来初始化mInflater对象

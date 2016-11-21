@@ -16,7 +16,7 @@ import com.example.achuan.bombtest.model.bean.CourseBean;
 import com.example.achuan.bombtest.presenter.SigninPresenter;
 import com.example.achuan.bombtest.presenter.contract.SigninContract;
 import com.example.achuan.bombtest.ui.assistant.activity.SigninDetailActivity;
-import com.example.achuan.bombtest.ui.assistant.adapter.SigninAdapter;
+import com.example.achuan.bombtest.ui.assistant.adapter.SigninCourseAdapter;
 import com.example.achuan.bombtest.util.SnackbarUtil;
 import com.example.achuan.bombtest.widget.SideBar;
 import com.victor.loading.rotate.RotateLoading;
@@ -44,7 +44,7 @@ public class SigninFragment extends BaseFragment<SigninPresenter> implements Sig
     @BindView(R.id.tv_hint)
     TextView mTvHint;
 
-    private SigninAdapter mAssistantAdapter;//列表适配器
+    private SigninCourseAdapter mAssistantAdapter;//列表适配器
     private List<CourseBean> mCourseBeanList;//数据集合引用变量
     private LinearLayoutManager linearManager;
 
@@ -64,7 +64,7 @@ public class SigninFragment extends BaseFragment<SigninPresenter> implements Sig
         //创建集合实例对象
         mCourseBeanList = new ArrayList<>();
         //初始化适配器数据绑定
-        mAssistantAdapter = new SigninAdapter(getActivity(), mCourseBeanList);
+        mAssistantAdapter = new SigninCourseAdapter(getActivity(), mCourseBeanList);
         //设置相关布局管理
         linearManager = new LinearLayoutManager
                 (getActivity(), LinearLayoutManager.VERTICAL, false);//设置布局方式为线性居中布局
@@ -136,7 +136,7 @@ public class SigninFragment extends BaseFragment<SigninPresenter> implements Sig
         });
 
         /***设置item的点击监听事件***/
-        mAssistantAdapter.setOnItemClickListener(new SigninAdapter.OnRecyclerViewItemClickListener() {
+        mAssistantAdapter.setOnItemClickListener(new SigninCourseAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, CourseBean courseBean) {
                 //跳转到签到界面

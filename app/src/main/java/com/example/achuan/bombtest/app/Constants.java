@@ -5,6 +5,9 @@ package com.example.achuan.bombtest.app;
  * 功能：存放自定义的不变的量
  */
 public class Constants {
+
+    public static final int NotificationID=1;
+
     /***在服务器端获取的Bmob应用ID***/
     public static String BmobAppid ="f85e90d6599e09343fde6cf8410ff5a4";
     /***在服务器端获取的Mob应用key和secret*/
@@ -20,7 +23,6 @@ public class Constants {
 
     //================= PREFERENCE ====================
     public static final String SP_AUTO_OPEN_BLUETOOTH = "is_auto_openBluetooth";
-
     public static final String SP_CURRENT_ITEM = "current_item";
 
 

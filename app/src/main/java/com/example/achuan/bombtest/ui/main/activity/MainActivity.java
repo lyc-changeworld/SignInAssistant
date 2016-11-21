@@ -175,7 +175,6 @@ public class MainActivity extends BaseActivity<MainPresenter>
             }
         }*/
     }
-
     //在活动准备好和用户进行交互时调用
     @Override
     protected void onResume() {

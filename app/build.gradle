@@ -28,7 +28,10 @@ android {
             dirs 'libs' //就是你放aar的目录地址
         }
     }
+
 }
+
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -51,6 +54,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.0.0'
     compile files('libs/pinyin4j-2.5.0.jar')
     /*Bmob后台管理*/
-    compile files('libs/Bmob_Push_V1.0.0beta_20160627.jar')
     compile files('libs/org.apache.http.legacy.jar')
+    compile files('libs/bmobPush_0.2beta.jar')
+    compile files('libs/Bmob_Push_V0.8beta_20160420.jar')
 }

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.achuan.bombtest">
 
+
     <!-- 1-添加Mob使用需要的权限 -->
     <!-- 读取联系人 -->
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
@@ -34,11 +35,9 @@
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-
     <!--添加手机振动的权限-->
     <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
-
-
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
 
     <application
@@ -49,48 +48,45 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!--注册service-->
-        <!--bmob-->
+
+        <!-- bmob push start -->
         <service
-            android:label="PushService"
             android:name="cn.bmob.push.lib.service.PushService"
-            android:process=":bmobpush"
-            android:exported="true">
+            android:label="PushService"
+            android:exported="true"
+            android:process=":bmobpush" >
             <intent-filter>
-                <action android:name="cn.bmob.push.lib.service.PushService"/>
+                <action android:name="cn.bmob.push.lib.service.PushService" />
             </intent-filter>
         </service>
-        <!-- 用于进程保活 -->
-        <service
+        <!--<service
             android:name="cn.bmob.push.lib.service.PushNotifyService"
             android:process=":bmobpush" >
-        </service>
-        <receiver android:name="cn.bmob.push.PushReceiver" >
-            <intent-filter android:priority="2147483647">
+        </service>-->
+        <!--<receiver
+            android:name="cn.bmob.push.PushNotifyReceiver" android:process=":bmobpush" >
+            <intent-filter>
+                <action android:name="cn.bmob.push.action.HEARTBEAT" />
+                <action android:name="cn.bmob.push.action.NOTIFY" />
+            </intent-filter>
+        </receiver>-->
+        <receiver android:name="cn.bmob.push.PushReceiver" android:process=":bmobpush">
+            <intent-filter>
                 <!-- 系统启动完成后会调用 -->
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <!-- 解锁完成后会调用 -->
                 <action android:name="android.intent.action.USER_PRESENT" />
-                <!-- 监听网络连通性 -->
+                <!-- 监听网络变化 -->
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-        <!-- 静态注册消息接收器 -->
-        <receiver android:name=".receiver.MyPushMessageReceiver">
-            <intent-filter >
-                <action android:name="cn.bmob.push.action.MESSAGE"/>
-            </intent-filter>
-        </receiver>
-        <!-- 接收心跳和唤醒的广播，要和PushService运行在同个进程 -->
-        <receiver
-            android:name="cn.bmob.push.PushNotifyReceiver"
-            android:process=":bmobpush" >
+        <receiver android:name=".receiver.MyPushMessageReceiver" >
             <intent-filter>
-                <!-- 接收心跳广播的action -->
-                <action android:name="cn.bmob.push.action.HEARTBEAT" />
-                <!-- 接收唤醒广播的action -->
-                <action android:name="cn.bmob.push.action.NOTIFY" />
+                <action android:name="cn.bmob.push.action.MESSAGE" />
             </intent-filter>
         </receiver>
+        <!-- bmob push end -->
+
 
         <!-- 注册界面Activity -->
         <!-- Mob自己定制的短信验证界面 -->
@@ -123,9 +119,19 @@
         <activity android:name=".ui.assistant.activity.SigninDetailActivity"
                   android:screenOrientation="portrait"
                   android:launchMode="singleTop"></activity>
+        <!--用户的基本信息设置界面-->
         <activity android:name=".ui.main.activity.ProfileSettingActivity"
                   android:screenOrientation="portrait"
                   android:launchMode="singleTop"></activity>
+        <!--点击通知消息弹窗后打开的界面-->
+        <activity android:name=".ui.NotificationActivity"
+                  android:screenOrientation="portrait"
+                  android:launchMode="singleTop"
+                  android:parentActivityName=".ui.main.activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.main.activity.MainActivity"/>
+        </activity>
     </application>
     <!--java.lang.NullPointerException:
   Attempt to read from field 'java.lang.String android.content.Intent.mAction' on a null object reference
