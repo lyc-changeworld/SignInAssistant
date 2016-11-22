@@ -23,6 +23,7 @@ public abstract class RxPresenter<T extends BaseView> implements BasePresenter<T
         mCompositeSubscription.add(subscription);
     }*/
 
+
     @Override
     public void attachView(T view) {
         this.mView = view;

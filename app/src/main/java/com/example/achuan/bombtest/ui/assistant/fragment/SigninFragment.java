@@ -56,7 +56,7 @@ public class SigninFragment extends BaseFragment<SigninPresenter> implements Sig
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_signin;
+        return R.layout.fragment_signin_course;
     }
 
     @Override
