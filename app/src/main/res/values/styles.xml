@@ -32,6 +32,7 @@
         <item name="colorControlActivated">@color/colorAccent</item>
     </style>
 
+
     <!--&lt;!&ndash;自定义Dialog的风格&ndash;&gt;
     <style name="ActionSheetDialogStyle" parent="@android:style/Theme.Dialog">
         &lt;!&ndash; 背景透明 &ndash;&gt;

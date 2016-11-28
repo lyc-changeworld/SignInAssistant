@@ -3,9 +3,9 @@ package com.example.achuan.bombtest.base;
 /**
  * Created by achuan 2016/10/29.
  * //基于Rx的Presenter封装,控制订阅的生命周期
- * 功能：当前还未使用Rx,只是使用了弱引用来控制周期
+ * 功能：当前还未使用Rx
  */
-public abstract class RxPresenter<T extends BaseView> implements BasePresenter<T> {
+public class RxPresenter<T extends BaseView> implements BasePresenter<T> {
 
     protected T mView;//view接口类型的弱引用
     /*protected CompositeSubscription mCompositeSubscription;

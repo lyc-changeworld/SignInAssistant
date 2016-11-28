@@ -185,27 +185,28 @@ public class DialogUtil {
 
     /***6-创建自定义的对话框,layoutId(自定义的布局文件)***/
     public static Dialog createMyselfDialog(Context context,int layoutId,int gravity){
-        Dialog dialog = new Dialog(context);
-        //去除掉对话框的标题栏
-        View bv = dialog.findViewById(android.R.id.title);
-        bv.setVisibility(View.GONE);
-        //将布局设置给Dialog
-        dialog.setContentView(layoutId);
+        //先创建窗口构造者对象
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        //设置视图布局
+        builder.setView(layoutId);
+        //通过构造者创建对话框布局实例
+        Dialog dialog=builder.create();
         //获取当前Activity所在的窗体
         Window dialogWindow = dialog.getWindow();
-        //设置Dialog从窗体底部弹出
+        //设置Dialog的位置
         dialogWindow.setGravity(gravity);//Gravity.BOTTOM
         /*//获得窗体的属性
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         lp.y = 0;//设置Dialog距离底部的距离
         //将属性设置给窗体
         dialogWindow.setAttributes(lp);*/
-        dialog.show();//显示对话框
+        //显示窗口布局
+        dialog.show();
+        return dialog;
         /*//初始化自定义布局的控件,通过dialog实例来获取
         TextView chooseMan= (TextView) dialog.findViewById(R.id.tv_choose_man);
         TextView chooseWoman= (TextView) dialog.findViewById(R.id.tv_choose_woman);
         TextView chooseCancel= (TextView) dialog.findViewById(R.id.tv_choose_cancel);*/
-        return dialog;
     }
 
 }

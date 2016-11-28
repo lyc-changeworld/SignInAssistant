@@ -4,8 +4,9 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:divider="@drawable/divider"
-              android:showDividers="middle">
-    
+              android:showDividers="middle"
+              android:background="@color/colorBackground">
+
     <TextView
         android:id="@+id/tv_choose_man"
         android:layout_width="match_parent"
@@ -26,8 +27,9 @@
         android:text="女"/>
     <!--给条目中间添加间距-->
     <android.support.v4.widget.Space
+        android:id="@+id/space_null"
         android:layout_width="match_parent"
-        android:layout_height="15dp"/>
+        android:layout_height="5dp"/>
     <TextView
         android:id="@+id/tv_choose_cancel"
         android:layout_width="match_parent"
