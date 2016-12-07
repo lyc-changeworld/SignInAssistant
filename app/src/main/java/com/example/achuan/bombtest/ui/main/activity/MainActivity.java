@@ -23,6 +23,7 @@ import com.example.achuan.bombtest.model.bean.MyUser;
 import com.example.achuan.bombtest.presenter.MainPresenter;
 import com.example.achuan.bombtest.presenter.contract.MainContract;
 import com.example.achuan.bombtest.ui.assistant.fragment.AssistantMainFragment;
+import com.example.achuan.bombtest.ui.bluetooth.fragment.BluetoothMainFragment;
 import com.example.achuan.bombtest.ui.main.fragment.SettingFragment;
 import com.example.achuan.bombtest.util.DialogUtil;
 import com.example.achuan.bombtest.util.ImageUtil;
@@ -57,6 +58,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
     //fragment的引用变量
     SettingFragment mSettingFragment;//设置部分界面
     AssistantMainFragment mAssistantMainFragment;
+    BluetoothMainFragment mBluetoothMainFragment;
 
     //记录左侧navigation的item点击
     MenuItem mLastMenuItem;//历史
@@ -86,11 +88,13 @@ public class MainActivity extends BaseActivity<MainPresenter>
         //初始化创建fragment实例对象
         mSettingFragment = new SettingFragment();
         mAssistantMainFragment=new AssistantMainFragment();
+        mBluetoothMainFragment=new BluetoothMainFragment();
+
 
         /***将需要显示的fragment全部装载到当前activity中***/
         //越靠前添加的fragment越在上面显示
         loadMultipleRootFragment(R.id.fl_main_content, 0,
-                mAssistantMainFragment,
+                mAssistantMainFragment,mBluetoothMainFragment,
                 mSettingFragment);
         //初始化第一次显示的item为设置界面
         mLastMenuItem = mNavView.getMenu().findItem(R.id.signInAssistant);
@@ -350,6 +354,8 @@ public class MainActivity extends BaseActivity<MainPresenter>
                 return mSettingFragment;
             case Constants.TYPE_SIGNINASSISTANT:
                 return mAssistantMainFragment;
+            case Constants.TYPE_BLUETOOTH:
+                return mBluetoothMainFragment;
             default:
                 break;
         }

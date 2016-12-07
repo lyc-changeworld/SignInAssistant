@@ -55,10 +55,31 @@
     <string name="action_search">搜索</string>
     <string name="selectTeacher_info">选择任课老师:</string>
     <!---->
-    <string name="person_signature">你的时间有限，所以不要为别人而活。不要被教条所限
-            ，不要活在别人的观念里。不要让别人的意见左右自己内心的声音。最重要的是，
-            勇敢的去追随自己的心灵和直觉，只有自己的心灵和直觉才知道你自己的真实想法
-            ，其他一切都是次要。</string>
+    <string name="person_signature">你的时间有限</string>
+
+    <!--  DeviceListActivity -->
+    <string name="scanning">正在搜索设备...</string>
+    <string name="select_device">选择一个蓝牙设备</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices found</string>
+    <string name="title_paired_devices">已配对的设备</string>
+    <string name="title_other_devices">其它设备</string>
+    <string name="button_scan">扫描</string>
+
+    <!--  BluetoothChat -->
+    <string name="send">Send</string>
+    <string name="not_connected">You are not connected to a device</string>
+    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Chat.</string>
+    <string name="title_connecting">connecting...</string>
+    <string name="title_connected_to">connected: </string>
+    <string name="title_not_connected">unconnected</string>
+    <string name="design_by">Design by Daniel Lee</string>
+
+
+    <string name="timing">温度：</string>
+    <string name="delay">湿度：</string>
+
+
 
 
 </resources>

@@ -11,6 +11,9 @@
     <color name="colorText">#2C2C2C</color>
     <color name="comment_reply">#9ba4a3</color>
 
+    <color name="background_main">#31A4E5</color>
+    <color name="background_blue">#297dee</color>
+
     <!--网上导入的颜色数据-->
     <color name="white">#FFFFFF</color> <!--白色 -->
     <color name="ivory">#FFFFF0</color> <!--象牙色 -->
