@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.achuan.bombtest.R;
 import com.example.achuan.bombtest.app.App;
 import com.example.achuan.bombtest.base.SimpleFragment;
-import com.example.achuan.bombtest.util.BmobUtil;
+import com.example.achuan.bombtest.model.http.BmobHelper;
 import com.example.achuan.bombtest.util.DialogUtil;
 import com.example.achuan.bombtest.util.FileUtil;
 import com.example.achuan.bombtest.util.ImageUtil;
@@ -105,7 +105,7 @@ public class SettingFragment extends SimpleFragment implements CompoundButton.On
                     public void onRightButtonClick() {
                         mBtLogout.setVisibility(View.INVISIBLE);
                         //退出账号,清除本地缓存用户对象
-                        BmobUtil.userLogOut();
+                        BmobHelper.getInstance().userLogOut();
                         /*****更新登录的全局变量*****/
                         App.getInstance().setIsLogin(false);
                         App.getInstance().setMyUser(null);

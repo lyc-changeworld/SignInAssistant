@@ -1,8 +1,10 @@
-package com.example.achuan.bombtest.util;
+package com.example.achuan.bombtest.model.http;
 
+import android.content.Context;
 import android.widget.Toast;
 
 import com.example.achuan.bombtest.app.App;
+import com.example.achuan.bombtest.app.Constants;
 import com.example.achuan.bombtest.model.bean.CourseBean;
 import com.example.achuan.bombtest.model.bean.MyUser;
 import com.example.achuan.bombtest.model.bean.SigninRecordBean;
@@ -11,6 +13,10 @@ import com.example.achuan.bombtest.model.bean.TeacherBean;
 
 import java.io.File;
 
+import cn.bmob.push.BmobPush;
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobConfig;
+import cn.bmob.v3.BmobInstallation;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
@@ -21,13 +27,44 @@ import cn.bmob.v3.listener.UpdateListener;
  * Created by achuan on 16-10-22.
  * 功能：Bmob后台数据操作封装类
  */
-public class BmobUtil {
-    private static String TAG="lyc-bmob";
+public class BmobHelper {
+
+    private static final String TAG="BmobHelper";
+
+    private Context appContext = null;
+    private static BmobHelper instance=null;
+
+    /*单例模式构造实例*/
+    public synchronized static BmobHelper getInstance(){
+        if(instance == null){
+            instance=new BmobHelper();
+        }
+        return instance;
+    }
+
+    /*------------------------Bmob SDK初始化配置--------------------------*/
+    public void init(Context context) {
+        appContext=context;
+        //设置BmobConfig
+        BmobConfig config =new BmobConfig.Builder(context).
+                setConnectTimeout(30).//请求超时时间（单位为秒）：默认15s
+                //文件分片上传时每片的大小（单位字节），默认512*1024
+                        setUploadBlockSize(500*1024).
+                        setApplicationId(Constants.BmobAppid).//设置appkey
+                setFileExpiration(2500)//文件的过期时间(单位为秒)：默认1800s
+                .build();
+        Bmob.initialize(config);
+        //保存当前安装该应用的设备的信息,用该信息来进行设备定向消息推送
+        // 使用推送服务时的初始化操作
+        BmobInstallation.getCurrentInstallation().save();
+        // 启动推送服务
+        BmobPush.startWork(context);
+    }
 
     /************************** 1-用户管理************************/
     /***.1 用户注册***/
     //设置用户名==手机号码
-    public static MyUser userSignUp(String phone, String password){
+    public  MyUser userSignUp(String phone, String password){
         //BmobUser bmobUser=new BmobUser();
         MyUser bmobUser=new MyUser();
         bmobUser.setUsername(phone);//设置用户名==手机号码
@@ -53,7 +90,7 @@ public class BmobUtil {
     }
     /***.2 用户登录***/
     //通过：用户名+密码
-    public static MyUser userLogin(String userName, String password){
+    public  MyUser userLogin(String userName, String password){
         MyUser bmobUser= new MyUser();
         bmobUser.setUsername(userName);
         bmobUser.setPassword(password);
@@ -71,7 +108,7 @@ public class BmobUtil {
     }
     /***.3 查询用户***/
     //根据用户名来查询
-    public static BmobQuery<MyUser> userQuery(String userName){
+    public BmobQuery<MyUser> userQuery(String userName){
         final BmobQuery<MyUser> query = new BmobQuery<MyUser>();
         query.addWhereEqualTo("username", userName);//一个用户名对应一个用户
         /*query.findObjects(new FindListener<BmobUser>() {
@@ -85,7 +122,7 @@ public class BmobUtil {
         return query;
     }
     /***.4 退出登录***/
-    public static void userLogOut(){
+    public  void userLogOut(){
         BmobUser.logOut();   //清除缓存用户对象
     }
     /***.5 当前用户***/
@@ -109,7 +146,7 @@ public class BmobUtil {
         Integer age = (Integer) BmobUser.getObjectByKey("age");
         Boolean sex = (Boolean) BmobUser.getObjectByKey("sex");*/
     /***.6 根据键值更新用户对应的信息***/
-    public static MyUser userBmobUpdate(String key,Object value){
+    public  MyUser userBmobUpdate(String key,Object value){
         MyUser myUser=new MyUser();
         myUser.setValue(key,value);
         /*bmobUser.update(, new UpdateListener() {
@@ -124,7 +161,7 @@ public class BmobUtil {
 
      /**************************2-课程查询相关************************/
     /***. 1查询全部的课程***/
-    public static BmobQuery<CourseBean> courseBmobQueryAll(){
+    public  BmobQuery<CourseBean> courseBmobQueryAll(){
         final BmobQuery<CourseBean> query = new BmobQuery<CourseBean>();
         // 根据Semester字段升序显示数据（由小到大）
         //query.order("Semester");
@@ -139,7 +176,7 @@ public class BmobUtil {
         return query;
     }
     /***. 2查询包含输入关键字的课程***/
-    public static BmobQuery<CourseBean> courseBmobQueryFromKeyword(String keyword){
+    public  BmobQuery<CourseBean> courseBmobQueryFromKeyword(String keyword){
         final BmobQuery<CourseBean> query = new BmobQuery<CourseBean>();
         /*目前模糊查询已经改成收费用户才能使用了*/
         //查询Cname字段的值含有keyword关键字的数据
@@ -160,7 +197,7 @@ public class BmobUtil {
 
     /**************************3-签到相关************************/
     /***.　1查询全部的教师数据***/
-    public static BmobQuery<TeacherBean> teacherBmobQueryAll(){
+    public  BmobQuery<TeacherBean> teacherBmobQueryAll(){
         final BmobQuery<TeacherBean> query = new BmobQuery<TeacherBean>();
         // 根据Semester字段升序显示数据（由小到大）
         //query.order("Semester");
@@ -175,7 +212,7 @@ public class BmobUtil {
         return query;
     }
     /***. 2添加数据到签到记录表中***/
-    public static SigninRecordBean signinDetailBmobSave(String Sno,String Cno,String Tno){
+    public  SigninRecordBean signinDetailBmobSave(String Sno,String Cno,String Tno){
         SigninRecordBean signinRecordBean=new SigninRecordBean();
         signinRecordBean.setSno(Sno);
         signinRecordBean.setCno(Cno);
@@ -193,7 +230,7 @@ public class BmobUtil {
 
     /**************************4-学生信息相关************************/
     /***. 1通过手机号来查询对应的学生数据是否存在***/
-    public static BmobQuery<StudentBean> studentBmobQuery(String mobilePhoneNumber){
+    public  BmobQuery<StudentBean> studentBmobQuery(String mobilePhoneNumber){
         final BmobQuery<StudentBean> query = new BmobQuery<StudentBean>();
         query.addWhereEqualTo("mobilePhoneNumber", mobilePhoneNumber);//一个用户名对应一个用户
         /*query.findObjects(new FindListener<StudentBean>() {
@@ -213,7 +250,7 @@ public class BmobUtil {
         return query;
     }
     /***.2 添加一条只带手机号的数据到学生信息表中***/
-    public static StudentBean StudentBmobSave(String mobilePhoneNumber){
+    public  StudentBean StudentBmobSave(String mobilePhoneNumber){
         StudentBean studentBean=new StudentBean();
         studentBean.setMobilePhoneNumber(mobilePhoneNumber);
         /*studentBean.save(new SaveListener<String>() {
@@ -227,7 +264,7 @@ public class BmobUtil {
         return studentBean;
     }
     /***.3 根据键值更新学生成员对应的信息***//*
-    public static StudentBean StudentBmobUpdate(String key,String value){
+    public  StudentBean StudentBmobUpdate(String key,String value){
         StudentBean studentBean=new StudentBean();
         studentBean.setValue(key,value);
         *//*studentBean.update(new UpdateListener() {
@@ -243,7 +280,7 @@ public class BmobUtil {
 
     /**************************5-文件管理相关************************/
     /***.　1上传单一文件***/
-    public static BmobFile fileBmobUpload(String picPath){
+    public  BmobFile fileBmobUpload(String picPath){
         //String picPath = "sdcard/temp.jpg";
         BmobFile bmobFile = new BmobFile(new File(picPath));
         /*bmobFile.uploadblock(new UploadFileListener() {
@@ -263,7 +300,7 @@ public class BmobUtil {
         return  bmobFile;
     }
     /***.　2删除单一文件***/
-    public static BmobFile fileBmobDelete(String headUrl){
+    public  BmobFile fileBmobDelete(String headUrl){
         BmobFile file = new BmobFile();
         file.setUrl(headUrl);//此url是上传文件成功之后通过bmobFile.getUrl()方法获取的。
         /*file.delete(new UpdateListener() {
@@ -277,7 +314,7 @@ public class BmobUtil {
         return file;
     }
     /***.　3下载单一文件***/
-    public static BmobFile fileBmobDownload(String fileName,String group,String headUrl){
+    public  BmobFile fileBmobDownload(String fileName,String group,String headUrl){
         BmobFile bmobfile =new BmobFile(fileName,group,headUrl);
         /*bmobfile.download(saveFile, new DownloadFileListener() {
             @Override
@@ -296,7 +333,7 @@ public class BmobUtil {
     //2-Bmob向他们的邮箱发送一封包含特殊的密码重置链接的电子邮件。
     //3-用户根据向导点击重置密码连接，打开一个特殊的Bmob页面，根据提示他们可以输入一个新的密码。
     //4-用户的密码已被重置为新输入的密码。
-    public static void resetPasswordByEmail(final String email){
+    public  void resetPasswordByEmail(final String email){
         BmobUser.resetPasswordByEmail(email, new UpdateListener() {
             @Override
             public void done(BmobException e) {

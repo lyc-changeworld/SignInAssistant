@@ -5,16 +5,13 @@ import android.app.Application;
 import android.content.Context;
 
 import com.example.achuan.bombtest.model.bean.MyUser;
+import com.example.achuan.bombtest.model.http.BmobHelper;
 import com.example.achuan.bombtest.util.FileUtil;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bmob.push.BmobPush;
-import cn.bmob.v3.Bmob;
-import cn.bmob.v3.BmobConfig;
-import cn.bmob.v3.BmobInstallation;
 import cn.bmob.v3.BmobUser;
 import cn.smssdk.SMSSDK;
 /*
@@ -47,20 +44,7 @@ public class App extends Application
         instance = this;
         sContext=getApplicationContext();//获得一个应用程序级别的Context
         /******初始化Bmob后台服务*****/
-        //设置BmobConfig
-        BmobConfig config =new BmobConfig.Builder(this).
-                setConnectTimeout(30).//请求超时时间（单位为秒）：默认15s
-                //文件分片上传时每片的大小（单位字节），默认512*1024
-                setUploadBlockSize(500*1024).
-                setApplicationId(Constants.BmobAppid).//设置appkey
-                setFileExpiration(2500)//文件的过期时间(单位为秒)：默认1800s
-                .build();
-        Bmob.initialize(config);
-        //保存当前安装该应用的设备的信息,用该信息来进行设备定向消息推送
-        // 使用推送服务时的初始化操作
-        BmobInstallation.getCurrentInstallation().save();
-        // 启动推送服务
-        BmobPush.startWork(this);
+        BmobHelper.getInstance().init(this);
 
         /*****初始化Mob的后台服务*****/
         SMSSDK.initSDK(this,Constants.MobAppkey,Constants.MobAppsecret);

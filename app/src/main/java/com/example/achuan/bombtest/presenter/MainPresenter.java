@@ -2,7 +2,7 @@ package com.example.achuan.bombtest.presenter;
 
 import com.example.achuan.bombtest.base.RxPresenter;
 import com.example.achuan.bombtest.presenter.contract.MainContract;
-import com.example.achuan.bombtest.util.BmobUtil;
+import com.example.achuan.bombtest.model.http.BmobHelper;
 
 import java.io.File;
 
@@ -18,7 +18,7 @@ public class MainPresenter extends RxPresenter<MainContract.View>
 
     @Override
     public void downloadFile(String fileName, String group, String headUrl, File saveFile) {
-        BmobUtil.fileBmobDownload(fileName,group,headUrl).
+        BmobHelper.getInstance().fileBmobDownload(fileName,group,headUrl).
                 download(saveFile, new DownloadFileListener() {
                     @Override
                     public void done(String s, BmobException e) {

@@ -15,7 +15,7 @@ import com.example.achuan.bombtest.R;
 import com.example.achuan.bombtest.app.App;
 import com.example.achuan.bombtest.base.SimpleActivity;
 import com.example.achuan.bombtest.model.bean.MyUser;
-import com.example.achuan.bombtest.util.BmobUtil;
+import com.example.achuan.bombtest.model.http.BmobHelper;
 import com.example.achuan.bombtest.util.FileUtil;
 import com.example.achuan.bombtest.util.MobUtil;
 
@@ -127,7 +127,7 @@ public class LoginActivity extends SimpleActivity {
         final String userName = mIdEtAccName.getText().toString().trim();
         final String passWord = mIdEtAccPassword.getText().toString().trim();
         //最先执行查询操作
-        BmobUtil.userQuery(userName).findObjects(new FindListener<MyUser>() {
+        BmobHelper.getInstance().userQuery(userName).findObjects(new FindListener<MyUser>() {
             @Override
             public void done(List<MyUser> list, BmobException e) {
                 if (e == null) {
@@ -140,7 +140,7 @@ public class LoginActivity extends SimpleActivity {
                     } else {
                         //存在,直接进行登录操作
                         // 执行登录操作,并会缓存用户信息到本地
-                        BmobUtil.userLogin(userName, passWord)
+                        BmobHelper.getInstance().userLogin(userName, passWord)
                                 .login(new SaveListener<BmobUser>() {
                                     @Override
                                     public void done(BmobUser bmobUser, BmobException e) {

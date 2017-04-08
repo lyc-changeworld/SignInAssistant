@@ -3,7 +3,7 @@ package com.example.achuan.bombtest.presenter;
 import com.example.achuan.bombtest.base.RxPresenter;
 import com.example.achuan.bombtest.model.bean.MyUser;
 import com.example.achuan.bombtest.presenter.contract.ProfileSettingContract;
-import com.example.achuan.bombtest.util.BmobUtil;
+import com.example.achuan.bombtest.model.http.BmobHelper;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class ProfileSettingPresenter extends RxPresenter<ProfileSettingContract
     @Override
     public void getUserObject(String userName) {
         mView.showLoading("正在加载用户信息,请稍候");
-        BmobUtil.userQuery(userName).findObjects(new FindListener<MyUser>() {
+        BmobHelper.getInstance().userQuery(userName).findObjects(new FindListener<MyUser>() {
             @Override
             public void done(List<MyUser> list, BmobException e) {
                 mView.hideLoading();
@@ -49,7 +49,7 @@ public class ProfileSettingPresenter extends RxPresenter<ProfileSettingContract
         /*开始更新,显示进度对话框*/
         mView.showLoading("正在修改,请稍后");
         //执行更新操作
-        BmobUtil.userBmobUpdate(key,value).update(id, new UpdateListener() {
+        BmobHelper.getInstance().userBmobUpdate(key,value).update(id, new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 //关闭进度对话框
@@ -88,7 +88,7 @@ public class ProfileSettingPresenter extends RxPresenter<ProfileSettingContract
     //删除历史存储的头像
     @Override
     public void deleteFile(String headUrl) {
-        BmobUtil.fileBmobDelete(headUrl).delete(new UpdateListener() {
+        BmobHelper.getInstance().fileBmobDelete(headUrl).delete(new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 if(e==null){

@@ -17,7 +17,7 @@ import com.example.achuan.bombtest.R;
 import com.example.achuan.bombtest.app.App;
 import com.example.achuan.bombtest.base.SimpleActivity;
 import com.example.achuan.bombtest.model.bean.MyUser;
-import com.example.achuan.bombtest.util.BmobUtil;
+import com.example.achuan.bombtest.model.http.BmobHelper;
 import com.example.achuan.bombtest.util.FileUtil;
 
 import java.io.File;
@@ -139,7 +139,7 @@ public class RegisterActivity extends SimpleActivity {
         final String firstPassword = mIdEtFirstPassword.getText().toString().trim();//登录密码
         final String confirmPassword = mIdEtConfirmPassword.getText().toString().trim();//确认密码
         //最先执行查询操作
-        BmobUtil.userQuery(registerName)
+        BmobHelper.getInstance().userQuery(registerName)
                 .findObjects(new FindListener<MyUser>() {
                     @Override
                     public void done(List<MyUser> object, BmobException e) {
@@ -155,7 +155,7 @@ public class RegisterActivity extends SimpleActivity {
                                 //接着判断两次输入的密码是否相同
                                 if (firstPassword.equals(confirmPassword)) {
                                     //开始执行注册操作
-                                    BmobUtil.userSignUp(registerName, firstPassword)
+                                    BmobHelper.getInstance().userSignUp(registerName, firstPassword)
                                             .signUp(new SaveListener<BmobUser>() {
                                                 @Override
                                                 public void done(BmobUser bmobUser, BmobException e) {

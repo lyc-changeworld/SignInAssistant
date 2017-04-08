@@ -3,7 +3,7 @@ package com.example.achuan.bombtest.presenter;
 import com.example.achuan.bombtest.base.RxPresenter;
 import com.example.achuan.bombtest.model.bean.TeacherBean;
 import com.example.achuan.bombtest.presenter.contract.SigninDetailContract;
-import com.example.achuan.bombtest.util.BmobUtil;
+import com.example.achuan.bombtest.model.http.BmobHelper;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class SigninDetailPresenter extends RxPresenter<SigninDetailContract.View
     //获取该课程对应的老师的数据
     @Override
     public void getTeacherData() {
-        BmobUtil.teacherBmobQueryAll().findObjects(new FindListener<TeacherBean>() {
+        BmobHelper.getInstance().teacherBmobQueryAll().findObjects(new FindListener<TeacherBean>() {
             @Override
             public void done(List<TeacherBean> list, BmobException e) {
                 if(e==null){
@@ -36,7 +36,7 @@ public class SigninDetailPresenter extends RxPresenter<SigninDetailContract.View
     @Override
     public void signinDeal(String Sno, String Cno, String Tno) {
         //执行签到,并保存数据到网络端
-        BmobUtil.signinDetailBmobSave(Sno,Cno,Tno).
+        BmobHelper.getInstance().signinDetailBmobSave(Sno,Cno,Tno).
                 save(new SaveListener<String>() {
                     @Override
                     public void done(String s, BmobException e) {

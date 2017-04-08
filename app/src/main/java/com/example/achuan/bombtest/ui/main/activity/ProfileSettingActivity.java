@@ -20,7 +20,7 @@ import com.example.achuan.bombtest.base.BaseActivity;
 import com.example.achuan.bombtest.model.bean.MyUser;
 import com.example.achuan.bombtest.presenter.ProfileSettingPresenter;
 import com.example.achuan.bombtest.presenter.contract.ProfileSettingContract;
-import com.example.achuan.bombtest.util.BmobUtil;
+import com.example.achuan.bombtest.model.http.BmobHelper;
 import com.example.achuan.bombtest.util.DialogUtil;
 import com.example.achuan.bombtest.util.ImageUtil;
 import com.example.achuan.bombtest.util.SnackbarUtil;
@@ -317,7 +317,7 @@ public class ProfileSettingActivity extends BaseActivity<ProfileSettingContract.
                     mIvHeadIcon.setImageBitmap(ImageUtil.decodeSampledBitmapFromFile(
                                     mImageUri.getPath(),60,60));
                     /************************2*************************/
-                    final BmobFile bmobFile=BmobUtil.fileBmobUpload(mImageUri.getPath());
+                    final BmobFile bmobFile= BmobHelper.getInstance().fileBmobUpload(mImageUri.getPath());
                     mPresenter.uploadFile(bmobFile);
                 }
                 break;
